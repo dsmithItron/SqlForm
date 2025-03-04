@@ -13,7 +13,7 @@ namespace SqlForm
             ApplicationConfiguration.Initialize();
             Application.Run(new SqlForm());
 
-            TestSql.RunDB();
+            TestSql.InitializeTables();
         }
     }
 }

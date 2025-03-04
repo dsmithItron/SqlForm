@@ -1,32 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 
 namespace SqlForm
 {
     internal class TestSql
     {
-        public static  void RunDB()
+        public static string tableName = "";
+        public static void InitializeTables()
         {
-            string serverConnectionString = "Server=localhost;Integrated Security=True;"; 
+            var connectionString = "Data Source=:memory:;Version=3;New=True;";
 
-            
-            using (var connection = new SqlConnection(serverConnectionString))
+
+            using (var connection = new SqliteConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-                    SqlCommand command = connection.CreateCommand();
-                    SqlDataReader reader;
-
-                    string databaseName = "TestDatabase";
-                    string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
-                    command = new SqlCommand(createDatabaseQuery, connection);
-                    command.ExecuteNonQuery();
+                    SqliteCommand command = connection.CreateCommand();
+                    SqliteDataReader reader;
 
 
                     // --------------------------------------------------------------------------------------
@@ -112,6 +104,22 @@ namespace SqlForm
                     Console.WriteLine($"Error: {ex}");
                 }
             }
+        }
+        public static void Select(string tableName, List<string> selectFields, List<string> selectConditions)
+        {
+
+        }
+        public static void Insert(string tableName, List<string> insertFields, List<string> insertFieldValues)
+        {
+
+        }
+        public static void Delete(string tableName, List<string> deleteFields, List<string> deleteConditions)
+        {
+
+        }
+        public static void Update(string tableName, List<string> updateFields, List<string> updateConditions)
+        {
+
         }
     }
 }
