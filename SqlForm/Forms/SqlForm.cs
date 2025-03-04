@@ -36,7 +36,6 @@ namespace SqlForm
 
         }
 
-
         public void UpdateLabelColors(string FormName)
         {
             switch (FormName)
@@ -111,6 +110,11 @@ namespace SqlForm
                 }
             }
         }
+        public void CloseMainForm()
+        {
+            this.Close();
+        }
+
 
         // Tool Methods
         private void SelectSidebarButton_Click(object sender, EventArgs e)

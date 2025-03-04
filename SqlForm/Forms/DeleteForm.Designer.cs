@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "DeleteForm";
+            SubmitButton = new Button();
+            SuspendLayout();
+            // 
+            // SubmitButton
+            // 
+            SubmitButton.Location = new Point(388, 227);
+            SubmitButton.Name = "SubmitButton";
+            SubmitButton.Size = new Size(75, 23);
+            SubmitButton.TabIndex = 0;
+            SubmitButton.Text = "Submit";
+            SubmitButton.UseVisualStyleBackColor = true;
+            SubmitButton.Click += SubmitButton_Click;
+            // 
+            // DeleteForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(SubmitButton);
+            Name = "DeleteForm";
+            Text = "DeleteForm";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button SubmitButton;
     }
 }

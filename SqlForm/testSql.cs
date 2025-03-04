@@ -9,7 +9,7 @@ namespace SqlForm
         public static string tableName = "";
         public static void InitializeTables()
         {
-            var connectionString = "Data Source=:memory:;Version=3;New=True;";
+            var connectionString = "Data Source=./Resources/testDB.db;Version=3;New=True;";
 
 
             using (var connection = new SqliteConnection(connectionString))

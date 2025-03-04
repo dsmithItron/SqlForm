@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "HomeForm";
+            SubmitButton = new Button();
+            SuspendLayout();
+            // 
+            // SubmitButton
+            // 
+            SubmitButton.Location = new Point(363, 214);
+            SubmitButton.Name = "SubmitButton";
+            SubmitButton.Size = new Size(75, 23);
+            SubmitButton.TabIndex = 1;
+            SubmitButton.Text = "Submit";
+            SubmitButton.UseVisualStyleBackColor = true;
+            SubmitButton.Click += SubmitButton_Click;
+            // 
+            // HomeForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(SubmitButton);
+            Name = "HomeForm";
+            Text = "HomeForm";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button SubmitButton;
     }
 }
