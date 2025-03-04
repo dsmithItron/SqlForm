@@ -1,0 +1,20 @@
+Home: 
+	Light Sea Green
+	2, 49, 82
+Select: 
+	33, 150, 243
+	#0a5b99
+	
+Insert:
+	67, 183, 110
+	#286e42
+	
+Update: 
+	#FF5722
+	#ad2a00
+	
+Delete:
+	228, 26, 74
+	137, 16, 44
+
+

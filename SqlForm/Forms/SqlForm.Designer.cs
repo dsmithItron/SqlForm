@@ -30,17 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlForm));
             SidebarPanel = new Panel();
+            SelectSidebarButton = new Button();
             DeleteSidebarButton = new Button();
             InsertSidebarButton = new Button();
             UpdateSidebarButton = new Button();
             TopSidebarPanel = new Panel();
             PanelTop = new Panel();
+            HeaderLabel = new Label();
             PanelDesktop = new Panel();
-            dataGridView1 = new DataGridView();
-            SelectSidebarButton = new Button();
             SidebarPanel.SuspendLayout();
-            PanelDesktop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            PanelTop.SuspendLayout();
             SuspendLayout();
             // 
             // SidebarPanel
@@ -57,6 +56,23 @@
             SidebarPanel.Size = new Size(180, 512);
             SidebarPanel.TabIndex = 0;
             // 
+            // SelectSidebarButton
+            // 
+            SelectSidebarButton.FlatAppearance.BorderSize = 0;
+            SelectSidebarButton.FlatStyle = FlatStyle.Flat;
+            SelectSidebarButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SelectSidebarButton.ForeColor = Color.White;
+            SelectSidebarButton.Image = (Image)resources.GetObject("SelectSidebarButton.Image");
+            SelectSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
+            SelectSidebarButton.Location = new Point(0, 67);
+            SelectSidebarButton.Margin = new Padding(0);
+            SelectSidebarButton.Name = "SelectSidebarButton";
+            SelectSidebarButton.Size = new Size(180, 60);
+            SelectSidebarButton.TabIndex = 4;
+            SelectSidebarButton.Text = "Select";
+            SelectSidebarButton.UseVisualStyleBackColor = true;
+            SelectSidebarButton.Click += SelectSidebarButton_Click;
+            // 
             // DeleteSidebarButton
             // 
             DeleteSidebarButton.FlatAppearance.BorderSize = 0;
@@ -72,6 +88,7 @@
             DeleteSidebarButton.TabIndex = 3;
             DeleteSidebarButton.Text = "Delete";
             DeleteSidebarButton.UseVisualStyleBackColor = true;
+            DeleteSidebarButton.Click += DeleteSidebarButton_Click;
             // 
             // InsertSidebarButton
             // 
@@ -88,6 +105,7 @@
             InsertSidebarButton.TabIndex = 2;
             InsertSidebarButton.Text = "Insert";
             InsertSidebarButton.UseVisualStyleBackColor = true;
+            InsertSidebarButton.Click += InsertSidebarButton_Click;
             // 
             // UpdateSidebarButton
             // 
@@ -104,7 +122,7 @@
             UpdateSidebarButton.TabIndex = 1;
             UpdateSidebarButton.Text = "Update";
             UpdateSidebarButton.UseVisualStyleBackColor = true;
-            UpdateSidebarButton.Click += sideBarButton1_Click;
+            UpdateSidebarButton.Click += UpdateSidebarButton_Click;
             // 
             // TopSidebarPanel
             // 
@@ -118,45 +136,35 @@
             // PanelTop
             // 
             PanelTop.BackColor = Color.LightSeaGreen;
+            PanelTop.Controls.Add(HeaderLabel);
             PanelTop.Dock = DockStyle.Top;
             PanelTop.Location = new Point(180, 0);
             PanelTop.Name = "PanelTop";
             PanelTop.Size = new Size(904, 67);
             PanelTop.TabIndex = 2;
             // 
+            // HeaderLabel
+            // 
+            HeaderLabel.BackColor = Color.Transparent;
+            HeaderLabel.Dock = DockStyle.Fill;
+            HeaderLabel.Font = new Font("MS Reference Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            HeaderLabel.ForeColor = Color.White;
+            HeaderLabel.Location = new Point(0, 0);
+            HeaderLabel.Name = "HeaderLabel";
+            HeaderLabel.Size = new Size(904, 67);
+            HeaderLabel.TabIndex = 0;
+            HeaderLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // PanelDesktop
             // 
             PanelDesktop.BackColor = Color.WhiteSmoke;
-            PanelDesktop.Controls.Add(dataGridView1);
             PanelDesktop.Dock = DockStyle.Fill;
             PanelDesktop.Location = new Point(180, 67);
+            PanelDesktop.Margin = new Padding(0);
             PanelDesktop.Name = "PanelDesktop";
+            PanelDesktop.Padding = new Padding(10);
             PanelDesktop.Size = new Size(904, 445);
             PanelDesktop.TabIndex = 3;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(167, 53);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(240, 150);
-            dataGridView1.TabIndex = 0;
-            // 
-            // SelectSidebarButton
-            // 
-            SelectSidebarButton.FlatAppearance.BorderSize = 0;
-            SelectSidebarButton.FlatStyle = FlatStyle.Flat;
-            SelectSidebarButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SelectSidebarButton.ForeColor = Color.White;
-            SelectSidebarButton.Image = (Image)resources.GetObject("SelectSidebarButton.Image");
-            SelectSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
-            SelectSidebarButton.Location = new Point(0, 67);
-            SelectSidebarButton.Margin = new Padding(0);
-            SelectSidebarButton.Name = "SelectSidebarButton";
-            SelectSidebarButton.Size = new Size(180, 60);
-            SelectSidebarButton.TabIndex = 4;
-            SelectSidebarButton.Text = "Select";
-            SelectSidebarButton.UseVisualStyleBackColor = true;
             // 
             // SqlForm
             // 
@@ -169,8 +177,7 @@
             Name = "SqlForm";
             Text = "SQL Form";
             SidebarPanel.ResumeLayout(false);
-            PanelDesktop.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            PanelTop.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -179,11 +186,11 @@
         private Panel SidebarPanel;
         private Panel PanelTop;
         private Panel PanelDesktop;
-        private DataGridView dataGridView1;
         private Panel TopSidebarPanel;
         private Button UpdateSidebarButton;
         private Button InsertSidebarButton;
         private Button DeleteSidebarButton;
         private Button SelectSidebarButton;
+        private Label HeaderLabel;
     }
 }
