@@ -35,10 +35,12 @@
             InsertSidebarButton = new Button();
             UpdateSidebarButton = new Button();
             TopSidebarPanel = new Panel();
+            HomeButton = new Button();
             PanelTop = new Panel();
             HeaderLabel = new Label();
             PanelDesktop = new Panel();
             SidebarPanel.SuspendLayout();
+            TopSidebarPanel.SuspendLayout();
             PanelTop.SuspendLayout();
             SuspendLayout();
             // 
@@ -127,15 +129,33 @@
             // TopSidebarPanel
             // 
             TopSidebarPanel.BackColor = Color.FromArgb(2, 49, 82);
+            TopSidebarPanel.Controls.Add(HomeButton);
             TopSidebarPanel.Dock = DockStyle.Top;
             TopSidebarPanel.Location = new Point(0, 0);
             TopSidebarPanel.Name = "TopSidebarPanel";
             TopSidebarPanel.Size = new Size(180, 67);
             TopSidebarPanel.TabIndex = 0;
             // 
+            // HomeButton
+            // 
+            HomeButton.FlatAppearance.BorderSize = 0;
+            HomeButton.FlatStyle = FlatStyle.Flat;
+            HomeButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            HomeButton.ForeColor = Color.White;
+            HomeButton.Image = (Image)resources.GetObject("HomeButton.Image");
+            HomeButton.ImageAlign = ContentAlignment.MiddleLeft;
+            HomeButton.Location = new Point(9, 9);
+            HomeButton.Margin = new Padding(0);
+            HomeButton.Name = "HomeButton";
+            HomeButton.Size = new Size(158, 49);
+            HomeButton.TabIndex = 5;
+            HomeButton.Text = "Home";
+            HomeButton.UseVisualStyleBackColor = true;
+            HomeButton.Click += HomeButton_Click;
+            // 
             // PanelTop
             // 
-            PanelTop.BackColor = Color.LightSeaGreen;
+            PanelTop.BackColor = Color.FromArgb(3, 74, 124);
             PanelTop.Controls.Add(HeaderLabel);
             PanelTop.Dock = DockStyle.Top;
             PanelTop.Location = new Point(180, 0);
@@ -177,6 +197,7 @@
             Name = "SqlForm";
             Text = "SQL Form";
             SidebarPanel.ResumeLayout(false);
+            TopSidebarPanel.ResumeLayout(false);
             PanelTop.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -192,5 +213,6 @@
         private Button DeleteSidebarButton;
         private Button SelectSidebarButton;
         private Label HeaderLabel;
+        private Button HomeButton;
     }
 }
