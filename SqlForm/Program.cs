@@ -1,3 +1,5 @@
+using SqlForm.Classes;
+
 namespace SqlForm
 {
     internal static class Program
@@ -8,12 +10,18 @@ namespace SqlForm
         [STAThread]
         static void Main()
         {
+            ApplicationSettings.LoadSettings();
+            ApplicationHistory.LoadHistory();
+
+            TestSql.InitializeTables();
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new SqlForm());
 
-            TestSql.InitializeTables();
+            ApplicationSettings.WriteSettings();
+            ApplicationHistory.WriteHistory();
         }
     }
 }

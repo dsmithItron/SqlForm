@@ -15,6 +15,8 @@ namespace SqlForm.Classes
         public static List<string> selectMiddle = new();
         public static List<string> selectRight = new();
 
+        public static SortedDictionary<string, List<string>> tableConditions = new();
+
         public static bool CheckForHistory()
         {
             if (File.Exists("SqlFormHistory.json"))
