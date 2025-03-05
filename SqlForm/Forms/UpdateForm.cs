@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
+using SqlForm.Forms;
 
 namespace SqlForm
 {
-    public partial class UpdateForm : Form
+    public partial class UpdateForm : ChildSqlForm
     {
         public UpdateForm()
         {
@@ -19,7 +12,7 @@ namespace SqlForm
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-
+            parentSqlForm.ResetForm();
         }
     }
 }

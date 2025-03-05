@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace SqlForm.Forms
 {
-    public partial class DeleteForm : Form
+    public partial class DeleteForm : ChildSqlForm
     {
         public DeleteForm()
         {
             InitializeComponent();
+        }
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            parentSqlForm.ResetForm();
         }
     }
 }

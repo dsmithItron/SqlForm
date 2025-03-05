@@ -10,16 +10,13 @@ using System.Windows.Forms;
 
 namespace SqlForm.Forms
 {
-    public partial class SelectForm : ChildSqlForm
+    public partial class ChildSqlForm : Form
     {
-        public SelectForm()
+        public SqlForm parentSqlForm;
+
+        public ChildSqlForm()
         {
             InitializeComponent();
-        }
-
-        private void SubmitButton_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

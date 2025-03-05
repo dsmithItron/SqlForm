@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SqlForm.Forms
 {
-    public partial class InsertForm : Form
+    public partial class InsertForm : ChildSqlForm
     {
         public InsertForm()
         {
@@ -19,7 +19,7 @@ namespace SqlForm.Forms
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-
+            parentSqlForm.ResetForm();
         }
     }
 }
