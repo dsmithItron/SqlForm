@@ -13,10 +13,12 @@ namespace SqlForm.Forms
     public partial class ChildSqlForm : Form
     {
         public SqlForm parentSqlForm;
+        public string query = "";
 
         public ChildSqlForm()
         {
             InitializeComponent();
         }
+
     }
 }

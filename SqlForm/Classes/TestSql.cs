@@ -153,26 +153,8 @@ namespace SqlForm.Classes
             }
             return columns;
         }
-        /// <summary>
-        /// Summary: <br></br>Get data table based on params that build query
-        /// <br></br><br></br>
-        /// <remarks>Remark: <br></br>Should be seperated into a querybuilder function that would pass built query to function</remarks>
-        /// </summary>
-        /// <param name="tableName">Table to have fields selected from</param>
-        /// <param name="selectFields">Fields to be selected in query</param>
-        /// <param name="selectConditions">Fields that will go after "Where" in query</param>
-        /// <returns>Datatable to be used as datagrid connection in SelectForm</returns>
-        public static DataTable Select(string tableName, List<string> selectFields, List<string> selectConditions)
+        public static string BuildSelectQuery(string tableName, List<string> selectFields, List<string> selectConditions)
         {
-            DataTable selectTable = new();
-            using (SqliteConnection connection = new(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    SqliteCommand command = connection.CreateCommand();
-                    SqliteDataReader reader;
-
                     StringBuilder selectStringBuilder = new();
                     selectStringBuilder.Append("SELECT ");
                     if (selectFields.Count == 0)
@@ -191,24 +173,91 @@ namespace SqlForm.Classes
                     }
 
                     string selectString = selectStringBuilder.ToString();
-                    command.CommandText = selectString;
+
+            return selectString;
+        }
+        public static string BuildSelectQuery(string tableName, List<string> selectConditions)
+                    {
+            StringBuilder selectStringBuilder = new();
+            selectStringBuilder.Append("SELECT ");
+            selectStringBuilder.Append($"* FROM {tableName}");
+            if (selectConditions.Count > 0)
+                        {
+                selectStringBuilder.Append(" WHERE ");
+                selectStringBuilder.Append(string.Join(" AND ", selectConditions));
+                            }
+
+            string selectString = selectStringBuilder.ToString();
+
+            return selectString;
+                        }
+        public static string BuildUpdateQuery(string tableName, List<string> updateFields, List<string> updateValues, List<string> updateConditions)
+        {
+            if (updateFields.Count != updateValues.Count) 
+            {
+                throw new Exception("The number of fields and values must be the same.");
+                    }
+
+            StringBuilder updateStringBuilder = new();
+            updateStringBuilder.Append($"Update {tableName} SET ");
+
+            List<string> setClauses = new();
+            for (int i = 0; i < updateFields.Count; i++)
+            {
+                setClauses.Add($"{updateFields[i]} = '{updateValues[i]}'");
+                }
+            updateStringBuilder.Append(string.Join(", ", setClauses));
+
+            if (updateConditions.Count > 0)
+                {
+                updateStringBuilder.Append(" WHERE ");
+                updateStringBuilder.Append(string.Join(" AND ", updateConditions));
+                }
+
+            string updateString = updateStringBuilder.ToString();
+
+            return updateString;
+            }
+
+
+        /// <summary>
+        /// Summary: <br></br>Get data table based on params that build query
+        /// <br></br><br></br>
+        /// <remarks>Remark: <br></br>Should be seperated into a querybuilder function that would pass built query to function</remarks>
+        /// </summary>
+        /// <param name="tableName">Table to have fields selected from</param>
+        /// <param name="selectFields">Fields to be selected in query</param>
+        /// <param name="selectConditions">Fields that will go after "Where" in query</param>
+        /// <returns>Datatable to be used as datagrid connection in SelectForm</returns>
+        public static DataTable ReaderQuery(string query)
+        {
+            DataTable selectTable = new();
+            using (SqliteConnection connection = new(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    SqliteCommand command = connection.CreateCommand();
+                    SqliteDataReader reader;
+
+                    command.CommandText = query;
                     MessageBox.Show($"{command.CommandText}",
                                     $"Select Command",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     reader = command.ExecuteReader();
 
                     selectTable.Load(reader);
                     foreach (DataRow row in selectTable.Rows)
-                    {
+                {
                         for (int i = 0; i < selectTable.Columns.Count; i++)
                         {
                             if (row.IsNull(i)) // Check if the value is NULL in the current DataRow
                             {
                                 // Replace NULL value with "Null" string
                                 row[i] = "NULL";
-                            }
-                        }
-                    }
+                }
+            }
+        }
                     return selectTable;
                 }
                 catch (Exception ex)
@@ -220,7 +269,7 @@ namespace SqlForm.Classes
             }
             return selectTable;
         }
-        public static void Insert(string tableName, List<string> insertFields, List<string> insertFieldValues)
+        public static void NonReaderQuery(string query)
         {
             using (SqliteConnection connection = new(connectionString))
             {
@@ -229,47 +278,17 @@ namespace SqlForm.Classes
                     connection.Open();
                     SqliteCommand command = connection.CreateCommand();
                     SqliteDataReader reader;
+
+                    command.CommandText = query;
+                    MessageBox.Show($"{command.CommandText}",
+                                    $"Query Command",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
-                                    $"Error in testsql Select",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-        public static void Delete(string tableName, List<string> deleteFields, List<string> deleteConditions)
-        {
-            using (SqliteConnection connection = new(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    SqliteCommand command = connection.CreateCommand();
-                    SqliteDataReader reader;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
-                                    $"Error in testsql Select",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-        public static void Update(string tableName, List<string> updateFields, List<string> updateConditions)
-        {
-            using (SqliteConnection connection = new(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    SqliteCommand command = connection.CreateCommand();
-                    SqliteDataReader reader;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
-                                    $"Error in testsql Select",
+                                    $"Error in testsql NonReaderQuery",
                                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
