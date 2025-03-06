@@ -9,7 +9,13 @@ namespace SqlForm.Classes
     internal class TestSql
     {
         public static string tableName = "";
+        // This needs to be kept current with each table that needs to be accessed
+        public static List<string> tableNames = new() {("Specform_all_options"),("Xml_sql_mapping")};
         private static string connectionString = "Data Source=../../../Resources/testDB.db";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static void InitializeTables()
         {
             using (SqliteConnection connection = new(connectionString))
@@ -82,11 +88,11 @@ namespace SqlForm.Classes
                           VALUES (@XML, @SQL, @Product, @table_name, @RATI, @Spec_Search_Maintenance, @RegEx, 
                                   @bool_to_yes_no, @hard_value, @where_clause, @field_priority, @logic, @common_name, 
                                   @persistent_field, @Hard_Tag_Value) ";
-                    command.Parameters.AddWithValue("@XML", "");
-                    command.Parameters.AddWithValue("@SQL", "");
-                    command.Parameters.AddWithValue("@Product", "");
-                    command.Parameters.AddWithValue("@table_name", "");
-                    command.Parameters.AddWithValue("@RATI", "");
+                    command.Parameters.AddWithValue("@XML", "123");
+                    command.Parameters.AddWithValue("@SQL", DBNull.Value);
+                    command.Parameters.AddWithValue("@Product", "Cent");
+                    command.Parameters.AddWithValue("@table_name", "ccgr");
+                    command.Parameters.AddWithValue("@RATI", "21");
                     command.Parameters.AddWithValue("@Spec_Search_Maintenance", "");
                     command.Parameters.AddWithValue("@RegEx", "");
                     command.Parameters.AddWithValue("@bool_to_yes_no", "");
@@ -94,34 +100,10 @@ namespace SqlForm.Classes
                     command.Parameters.AddWithValue("@where_clause", "");
                     command.Parameters.AddWithValue("@field_priority", "");
                     command.Parameters.AddWithValue("@logic", "");
-                    command.Parameters.AddWithValue("@common_name", "");
-                    command.Parameters.AddWithValue("@persistent_field", "");
-                    command.Parameters.AddWithValue("@Hard_Tag_Value", "");
+                    command.Parameters.AddWithValue("@common_name", " ");
+                    command.Parameters.AddWithValue("@persistent_field", "test");
+                    command.Parameters.AddWithValue("@Hard_Tag_Value", "val");
                     command.ExecuteNonQuery();
-                    // --------------------------------------------------------------------------------------
-
-
-                    // --------------------------------------------------------------------------------------
-                    // SELECT SpecformAllOptions
-                    command.CommandText =
-                        @"
-                          PRAGMA table_info(Specform_all_options); 
-                        ";
-                    reader = command.ExecuteReader();
-                    DataTable specformOptionsTable = new();
-                    specformOptionsTable.Load(reader);
-                    // --------------------------------------------------------------------------------------
-
-
-                    // --------------------------------------------------------------------------------------
-                    // SELECT XmlSqlMapping
-                    command.CommandText =
-                        @"
-                          PRAGMA table_info(Xml_sql_mapping);
-                        ";
-                    reader = command.ExecuteReader();
-                    DataTable xmlSqlMappingTable = new();
-                    xmlSqlMappingTable.Load(reader);
                     // --------------------------------------------------------------------------------------
                 }
                 catch (Exception ex)
@@ -133,6 +115,13 @@ namespace SqlForm.Classes
             }
         }
 
+        /// <summary>
+        /// Summary: <br></br>Grab all fields for a table
+        /// <br></br><br></br>
+        /// <remarks>Remark: <br></br>Needs to be changed when moving away from SqLite</remarks>
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns>String list of all fields found for table</returns>
         public static List<string> GetColumns(string tableName)
         {
             List<string> columns = new List<string>();
@@ -150,7 +139,6 @@ namespace SqlForm.Classes
                     {
                         while (reader.Read())
                         {
-                            // For example, to get the column name, you can use reader["name"]
                             columns.Add(reader["name"].ToString());
                         }
                     }
@@ -165,7 +153,15 @@ namespace SqlForm.Classes
             }
             return columns;
         }
-
+        /// <summary>
+        /// Summary: <br></br>Get data table based on params that build query
+        /// <br></br><br></br>
+        /// <remarks>Remark: <br></br>Should be seperated into a querybuilder function that would pass built query to function</remarks>
+        /// </summary>
+        /// <param name="tableName">Table to have fields selected from</param>
+        /// <param name="selectFields">Fields to be selected in query</param>
+        /// <param name="selectConditions">Fields that will go after "Where" in query</param>
+        /// <returns>Datatable to be used as datagrid connection in SelectForm</returns>
         public static DataTable Select(string tableName, List<string> selectFields, List<string> selectConditions)
         {
             DataTable selectTable = new();
