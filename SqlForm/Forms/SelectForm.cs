@@ -57,15 +57,15 @@ namespace SqlForm.Forms
             MiddleConditionDropdown.Items.Clear();
             RightConditionDropdown.Items.Clear();
 
-            foreach(string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text + "Left"])
+            foreach(string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectLeft"])
             {
                 LeftConditionDropdown.Items.Add(condition);
             }
-            foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text + "Middle"])
+            foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectMiddle"])
             {
                 MiddleConditionDropdown.Items.Add(condition);
             }
-            foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text + "Right"])
+            foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectRight"])
             {
                 RightConditionDropdown.Items.Add(condition);
             }
