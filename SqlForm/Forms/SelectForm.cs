@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SqlForm.Classes;
 
 namespace SqlForm.Forms
@@ -16,36 +17,41 @@ namespace SqlForm.Forms
     {
         List<String> selectFields = new();
         List<String> selectConditions = new();
+        List<string> tableColumns = new();
         public SelectForm()
         {
             InitializeComponent();
             FillTableDropdown();
         }
 
-        private void SubmitButton_Click(object sender, EventArgs e)
+        public void ClearFields()
         {
-            FillSelectTable();
-            selectTable.BringToFront();
-            selectTable.Dock = DockStyle.Fill;
+            selectedFieldsGrid.Visible = false;
+            selectFields = new();
+            selectConditions = new();
+            tableColumns = new();
+            selectedFieldsGrid.Rows.Clear();
+            query = "";
         }
 
         private void FillSelectTable()
         {
-            selectTable.DataSource = TestSql.Select(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+            selectTable.DataSource = TestSql.ReaderQuery(query);
         }
 
         private void FillTableDropdown()
         {
             SqlTableDropdown.Items.Clear();
-            SqlTableDropdown.Items.Add("Specform_all_options");
-            SqlTableDropdown.Items.Add("Xml_sql_mapping");
+            foreach (string tableName in TestSql.tableNames) 
+            {
+                SqlTableDropdown.Items.Add(tableName);
+            }
         }
 
         private void FillFieldDropDown()
         {
             FieldDropdown.Items.Clear();
-            List<string> tableColumns = TestSql.GetColumns(SqlTableDropdown.Text);
-            foreach(string field in tableColumns)
+            foreach (string field in tableColumns)
             {
                 FieldDropdown.Items.Add(field);
             }
@@ -57,7 +63,21 @@ namespace SqlForm.Forms
             MiddleConditionDropdown.Items.Clear();
             RightConditionDropdown.Items.Clear();
 
-            foreach(string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectLeft"])
+            foreach (string field in tableColumns)
+            {
+                LeftConditionDropdown.Items.Add(field);
+                RightConditionDropdown.Items.Add(field);
+            }
+            MiddleConditionDropdown.Items.Add("=");
+            MiddleConditionDropdown.Items.Add(">");
+            MiddleConditionDropdown.Items.Add("<");
+            MiddleConditionDropdown.Items.Add(">=");
+            MiddleConditionDropdown.Items.Add("<=");
+            MiddleConditionDropdown.Items.Add("<>");
+            MiddleConditionDropdown.Items.Add("like");
+
+
+            foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectLeft"])
             {
                 LeftConditionDropdown.Items.Add(condition);
             }
@@ -73,6 +93,8 @@ namespace SqlForm.Forms
 
         private void SqlTableDropdown_SelectedValueChanged(object sender, EventArgs e)
         {
+            ClearFields();
+            tableColumns = TestSql.GetColumns(SqlTableDropdown.Text);
             FillFieldDropDown();
             FillConditionalDropdown();
 
@@ -83,32 +105,92 @@ namespace SqlForm.Forms
             MiddleConditionDropdown.Visible = true;
             RightConditionDropdown.Visible = true;
             SubmitConditionSelection.Visible = true;
+
+            SubmitAllButton.Visible = true;
+            manualQueryButton.Visible = true;
+            viewQueryButton.Visible = true;
+
+            query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+
         }
 
         private void SubmitFieldSelection_Click(object sender, EventArgs e)
         {
-            selectFields.Add(FieldDropdown.SelectedItem.ToString());
+            // If an item was selected from dropdown
+            // Prevents pressing button 
+            if (FieldDropdown.SelectedIndex >= 0 && !selectFields.Contains(FieldDropdown.SelectedItem.ToString()))
+            {
+                selectFields.Add(FieldDropdown.SelectedItem.ToString());
+                selectedFieldsGrid.Rows.Add(FieldDropdown.SelectedItem.ToString());
+                FieldDropdown.SelectedIndex = -1;
+                selectedFieldsGrid.Visible = true;
+
+                query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+            }
+
         }
 
         private void SubmitConditionSelection_Click(object sender, EventArgs e)
         {
-
             string val1 = LeftConditionDropdown.Text, val2 = MiddleConditionDropdown.Text, val3 = RightConditionDropdown.Text;
-            if (!LeftConditionDropdown.Items.Contains(val1))
+            if (val1 != "" && val2 != "" && val3 != "")
             {
-                LeftConditionDropdown.Items.Add(val1);
-                LeftConditionDropdown.SelectedItem = val1;
+                if (!LeftConditionDropdown.Items.Contains(val1))
+                {
+                    LeftConditionDropdown.Items.Add(val1);
+                }
+                if (!MiddleConditionDropdown.Items.Contains(val2))
+                {
+                    MiddleConditionDropdown.Items.Add(val2);
+                }
+                if (!RightConditionDropdown.Items.Contains(val3))
+                {
+                    RightConditionDropdown.Items.Add(val3);
+                }
+                selectConditions.Add($"{val1} {val2} {val3} ");
+
+                LeftConditionDropdown.SelectedIndex = -1;
+                LeftConditionDropdown.Text = "";
+
+                MiddleConditionDropdown.SelectedIndex = -1;
+                MiddleConditionDropdown.Text = "";
+
+                RightConditionDropdown.SelectedIndex = -1;
+                RightConditionDropdown.Text = "";
+
+                query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
             }
-            if (!MiddleConditionDropdown.Items.Contains(val2))
-            {
-                MiddleConditionDropdown.Items.Add(val2);
-                MiddleConditionDropdown.SelectedItem = val2;
-            }
-            if (!RightConditionDropdown.Items.Contains(val3))
-            {
-                RightConditionDropdown.Items.Add(val3);
-                RightConditionDropdown.SelectedItem = val3;
-            }
+        }
+
+        private void ViewQueryButton_Click(object sender, EventArgs e)
+        {
+            QueryForm queryForm = new QueryForm();
+
+            queryForm.parentForm = this;
+            queryForm.canEdit = false;
+            queryForm.queryString = query;
+
+            queryForm.ChangeData();
+            queryForm.Show();
+        }
+
+        private void ManualQueryButton_Click(object sender, EventArgs e)
+        {
+            QueryForm queryForm = new QueryForm();
+
+            queryForm.parentForm = this;
+            queryForm.canEdit = true;
+            queryForm.queryString = query;
+
+            queryForm.ChangeData();
+            queryForm.Show();
+        }
+
+        private void FinishQueryCreationButton_Click(object sender, EventArgs e)
+        {
+            FillSelectTable();
+            selectTable.BringToFront();
+            selectTable.Dock = DockStyle.Fill;
         }
     }
 }

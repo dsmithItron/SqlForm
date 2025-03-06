@@ -83,7 +83,7 @@
             DeleteSidebarButton.ForeColor = Color.White;
             DeleteSidebarButton.Image = (Image)resources.GetObject("DeleteSidebarButton.Image");
             DeleteSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
-            DeleteSidebarButton.Location = new Point(0, 187);
+            DeleteSidebarButton.Location = new Point(0, 247);
             DeleteSidebarButton.Margin = new Padding(0);
             DeleteSidebarButton.Name = "DeleteSidebarButton";
             DeleteSidebarButton.Size = new Size(180, 60);
@@ -117,7 +117,7 @@
             UpdateSidebarButton.ForeColor = Color.White;
             UpdateSidebarButton.Image = (Image)resources.GetObject("UpdateSidebarButton.Image");
             UpdateSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
-            UpdateSidebarButton.Location = new Point(0, 247);
+            UpdateSidebarButton.Location = new Point(0, 187);
             UpdateSidebarButton.Margin = new Padding(0);
             UpdateSidebarButton.Name = "UpdateSidebarButton";
             UpdateSidebarButton.Size = new Size(180, 60);

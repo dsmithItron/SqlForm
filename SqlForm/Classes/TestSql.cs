@@ -155,48 +155,48 @@ namespace SqlForm.Classes
         }
         public static string BuildSelectQuery(string tableName, List<string> selectFields, List<string> selectConditions)
         {
-                    StringBuilder selectStringBuilder = new();
-                    selectStringBuilder.Append("SELECT ");
-                    if (selectFields.Count == 0)
-                    {
-                        selectStringBuilder.Append($"* FROM {tableName}");
-                    }
-                    else
-                    {
-                        selectStringBuilder.Append(string.Join(", ", selectFields));
-                        selectStringBuilder.Append($" FROM {tableName}");
-                    }
-                    if (selectConditions.Count > 0)
-                    {
-                        selectStringBuilder.Append(" WHERE ");
-                        selectStringBuilder.Append(string.Join(" AND ", selectConditions));
-                    }
-
-                    string selectString = selectStringBuilder.ToString();
-
-            return selectString;
-        }
-        public static string BuildSelectQuery(string tableName, List<string> selectConditions)
-                    {
             StringBuilder selectStringBuilder = new();
             selectStringBuilder.Append("SELECT ");
-            selectStringBuilder.Append($"* FROM {tableName}");
+            if (selectFields.Count == 0)
+            {
+                selectStringBuilder.Append($"* FROM {tableName}");
+            }
+            else
+            {
+                selectStringBuilder.Append(string.Join(", ", selectFields));
+                selectStringBuilder.Append($" FROM {tableName}");
+            }
             if (selectConditions.Count > 0)
-                        {
+            {
                 selectStringBuilder.Append(" WHERE ");
                 selectStringBuilder.Append(string.Join(" AND ", selectConditions));
-                            }
+            }
 
             string selectString = selectStringBuilder.ToString();
 
             return selectString;
-                        }
+        }
+        public static string BuildSelectQuery(string tableName, List<string> selectConditions)
+        {
+            StringBuilder selectStringBuilder = new();
+            selectStringBuilder.Append("SELECT ");
+            selectStringBuilder.Append($"* FROM {tableName}");
+            if (selectConditions.Count > 0)
+            {
+                selectStringBuilder.Append(" WHERE ");
+                selectStringBuilder.Append(string.Join(" AND ", selectConditions));
+            }
+
+            string selectString = selectStringBuilder.ToString();
+
+            return selectString;
+        }
         public static string BuildUpdateQuery(string tableName, List<string> updateFields, List<string> updateValues, List<string> updateConditions)
         {
             if (updateFields.Count != updateValues.Count) 
             {
                 throw new Exception("The number of fields and values must be the same.");
-                    }
+            }
 
             StringBuilder updateStringBuilder = new();
             updateStringBuilder.Append($"Update {tableName} SET ");
@@ -205,19 +205,19 @@ namespace SqlForm.Classes
             for (int i = 0; i < updateFields.Count; i++)
             {
                 setClauses.Add($"{updateFields[i]} = '{updateValues[i]}'");
-                }
+            }
             updateStringBuilder.Append(string.Join(", ", setClauses));
 
             if (updateConditions.Count > 0)
-                {
+            {
                 updateStringBuilder.Append(" WHERE ");
                 updateStringBuilder.Append(string.Join(" AND ", updateConditions));
-                }
+            }
 
             string updateString = updateStringBuilder.ToString();
 
             return updateString;
-            }
+        }
 
 
         /// <summary>
@@ -248,16 +248,16 @@ namespace SqlForm.Classes
 
                     selectTable.Load(reader);
                     foreach (DataRow row in selectTable.Rows)
-                {
+                    {
                         for (int i = 0; i < selectTable.Columns.Count; i++)
                         {
                             if (row.IsNull(i)) // Check if the value is NULL in the current DataRow
                             {
                                 // Replace NULL value with "Null" string
                                 row[i] = "NULL";
-                }
-            }
-        }
+                            }
+                        }
+                    }
                     return selectTable;
                 }
                 catch (Exception ex)
