@@ -30,12 +30,12 @@
         {
             SuspendLayout();
             // 
-            // IChildSqlForm
+            // ChildSqlForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "IChildSqlForm";
+            ClientSize = new Size(800, 421);
+            Name = "ChildSqlForm";
             ResumeLayout(false);
         }
 
