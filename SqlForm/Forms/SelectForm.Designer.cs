@@ -47,11 +47,15 @@
             LeftConditionDropdown = new ComboBox();
             selectedFieldsGrid = new DataGridView();
             field = new DataGridViewTextBoxColumn();
+            fieldSelectLabel = new Label();
+            panel2 = new Panel();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)selectTable).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)conditionFieldsGrid).BeginInit();
             queryBuilderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)selectedFieldsGrid).BeginInit();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // selectTable
@@ -146,10 +150,10 @@
             // queryBuilderPanel
             // 
             queryBuilderPanel.BackColor = Color.Gainsboro;
+            queryBuilderPanel.Controls.Add(label2);
+            queryBuilderPanel.Controls.Add(panel2);
             queryBuilderPanel.Controls.Add(submitConditionConjunction);
             queryBuilderPanel.Controls.Add(conditionConjunctDropdown);
-            queryBuilderPanel.Controls.Add(FieldDropdown);
-            queryBuilderPanel.Controls.Add(SubmitFieldSelection);
             queryBuilderPanel.Controls.Add(SubmitConditionSelection);
             queryBuilderPanel.Controls.Add(RightConditionDropdown);
             queryBuilderPanel.Controls.Add(MiddleConditionDropdown);
@@ -183,16 +187,16 @@
             // 
             FieldDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
             FieldDropdown.FormattingEnabled = true;
-            FieldDropdown.Location = new Point(208, 41);
+            FieldDropdown.Location = new Point(36, 33);
             FieldDropdown.Name = "FieldDropdown";
             FieldDropdown.Size = new Size(121, 23);
             FieldDropdown.TabIndex = 11;
             // 
             // SubmitFieldSelection
             // 
-            SubmitFieldSelection.Location = new Point(335, 40);
+            SubmitFieldSelection.Location = new Point(163, 32);
             SubmitFieldSelection.Name = "SubmitFieldSelection";
-            SubmitFieldSelection.Size = new Size(75, 23);
+            SubmitFieldSelection.Size = new Size(75, 24);
             SubmitFieldSelection.TabIndex = 4;
             SubmitFieldSelection.Text = "Submit";
             SubmitFieldSelection.UseVisualStyleBackColor = true;
@@ -251,6 +255,45 @@
             field.Name = "field";
             field.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
+            // fieldSelectLabel
+            // 
+            fieldSelectLabel.BackColor = Color.Gainsboro;
+            fieldSelectLabel.FlatStyle = FlatStyle.Flat;
+            fieldSelectLabel.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            fieldSelectLabel.ImageAlign = ContentAlignment.BottomLeft;
+            fieldSelectLabel.Location = new Point(3, 3);
+            fieldSelectLabel.Margin = new Padding(3, 3, 0, 0);
+            fieldSelectLabel.Name = "fieldSelectLabel";
+            fieldSelectLabel.Size = new Size(97, 23);
+            fieldSelectLabel.TabIndex = 4;
+            fieldSelectLabel.Text = "Select Field:";
+            fieldSelectLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.Silver;
+            panel2.Controls.Add(fieldSelectLabel);
+            panel2.Controls.Add(FieldDropdown);
+            panel2.Controls.Add(SubmitFieldSelection);
+            panel2.Location = new Point(162, 3);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(245, 59);
+            panel2.TabIndex = 14;
+            // 
+            // label2
+            // 
+            label2.BackColor = Color.Gainsboro;
+            label2.FlatStyle = FlatStyle.Flat;
+            label2.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ImageAlign = ContentAlignment.BottomLeft;
+            label2.Location = new Point(6, 77);
+            label2.Margin = new Padding(3, 3, 0, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(134, 23);
+            label2.TabIndex = 12;
+            label2.Text = "Select Conditions:";
+            label2.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // SelectForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -266,6 +309,7 @@
             ((System.ComponentModel.ISupportInitialize)conditionFieldsGrid).EndInit();
             queryBuilderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)selectedFieldsGrid).EndInit();
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -292,5 +336,8 @@
         private Label label1;
         private ComboBox SqlTableDropdown;
         private Button SubmitAllButton;
+        private Label fieldSelectLabel;
+        private Panel panel2;
+        private Label label2;
     }
 }
