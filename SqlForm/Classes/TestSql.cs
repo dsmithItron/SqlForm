@@ -169,7 +169,7 @@ namespace SqlForm.Classes
             if (selectConditions.Count > 0)
             {
                 selectStringBuilder.Append(" WHERE ");
-                selectStringBuilder.Append(string.Join(" AND ", selectConditions));
+                selectStringBuilder.Append(string.Join(" ", selectConditions));
             }
 
             string selectString = selectStringBuilder.ToString();
@@ -184,7 +184,7 @@ namespace SqlForm.Classes
             if (selectConditions.Count > 0)
             {
                 selectStringBuilder.Append(" WHERE ");
-                selectStringBuilder.Append(string.Join(" AND ", selectConditions));
+                selectStringBuilder.Append(string.Join(" ", selectConditions));
             }
 
             string selectString = selectStringBuilder.ToString();

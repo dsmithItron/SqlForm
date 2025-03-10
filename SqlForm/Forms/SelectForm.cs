@@ -42,7 +42,7 @@ namespace SqlForm.Forms
         private void FillTableDropdown()
         {
             SqlTableDropdown.Items.Clear();
-            foreach (string tableName in TestSql.tableNames) 
+            foreach (string tableName in TestSql.tableNames)
             {
                 SqlTableDropdown.Items.Add(tableName);
             }
@@ -75,6 +75,8 @@ namespace SqlForm.Forms
             MiddleConditionDropdown.Items.Add("<=");
             MiddleConditionDropdown.Items.Add("<>");
             MiddleConditionDropdown.Items.Add("like");
+            MiddleConditionDropdown.Items.Add("between");
+            MiddleConditionDropdown.Items.Add("in");
 
 
             foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectLeft"])
@@ -89,6 +91,9 @@ namespace SqlForm.Forms
             {
                 RightConditionDropdown.Items.Add(condition);
             }
+
+            conditionConjunctDropdown.Items.Add("AND");
+            conditionConjunctDropdown.Items.Add("OR");
         }
 
         private void SqlTableDropdown_SelectedValueChanged(object sender, EventArgs e)
@@ -98,19 +103,14 @@ namespace SqlForm.Forms
             FillFieldDropDown();
             FillConditionalDropdown();
 
-            FieldDropdown.Visible = true;
-            SubmitFieldSelection.Visible = true;
+            queryBuilderPanel.Visible = true;
 
-            LeftConditionDropdown.Visible = true;
-            MiddleConditionDropdown.Visible = true;
-            RightConditionDropdown.Visible = true;
-            SubmitConditionSelection.Visible = true;
+            queryBox.Visible = true;
 
             SubmitAllButton.Visible = true;
-            manualQueryButton.Visible = true;
-            viewQueryButton.Visible = true;
 
             query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+            queryBox.Text = query;
 
         }
 
@@ -126,39 +126,49 @@ namespace SqlForm.Forms
                 selectedFieldsGrid.Visible = true;
 
                 query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+                queryBox.Text = query;
             }
 
         }
 
         private void SubmitConditionSelection_Click(object sender, EventArgs e)
         {
-            string val1 = LeftConditionDropdown.Text, val2 = MiddleConditionDropdown.Text, val3 = RightConditionDropdown.Text;
-            if (val1 != "" && val2 != "" && val3 != "")
+            int conditionNum = conditionFieldsGrid.Rows.Count - 1;
+            if (conditionNum == 0 || conditionNum % 2 == 0)
             {
-                if (!LeftConditionDropdown.Items.Contains(val1))
+                string val1 = LeftConditionDropdown.Text, val2 = MiddleConditionDropdown.Text, val3 = RightConditionDropdown.Text;
+                if (val1 != "" && val2 != "" && val3 != "")
                 {
-                    LeftConditionDropdown.Items.Add(val1);
+                    if (!LeftConditionDropdown.Items.Contains(val1))
+                    {
+                        LeftConditionDropdown.Items.Add(val1);
+                    }
+                    if (!MiddleConditionDropdown.Items.Contains(val2))
+                    {
+                        MiddleConditionDropdown.Items.Add(val2);
+                    }
+                    if (!RightConditionDropdown.Items.Contains(val3))
+                    {
+                        RightConditionDropdown.Items.Add(val3);
+                    }
+                    selectConditions.Add($"{val1} {val2} {val3} ");
+
+                    LeftConditionDropdown.SelectedIndex = -1;
+                    LeftConditionDropdown.Text = "";
+
+                    MiddleConditionDropdown.SelectedIndex = -1;
+                    MiddleConditionDropdown.Text = "";
+
+                    RightConditionDropdown.SelectedIndex = -1;
+                    RightConditionDropdown.Text = "";
+
+
+                    conditionFieldsGrid.Rows.Add($"{val1} {val2} {val3} ");
+                    conditionFieldsGrid.Visible = true;
+
+                    query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+                    queryBox.Text = query;
                 }
-                if (!MiddleConditionDropdown.Items.Contains(val2))
-                {
-                    MiddleConditionDropdown.Items.Add(val2);
-                }
-                if (!RightConditionDropdown.Items.Contains(val3))
-                {
-                    RightConditionDropdown.Items.Add(val3);
-                }
-                selectConditions.Add($"{val1} {val2} {val3} ");
-
-                LeftConditionDropdown.SelectedIndex = -1;
-                LeftConditionDropdown.Text = "";
-
-                MiddleConditionDropdown.SelectedIndex = -1;
-                MiddleConditionDropdown.Text = "";
-
-                RightConditionDropdown.SelectedIndex = -1;
-                RightConditionDropdown.Text = "";
-
-                query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
             }
         }
 
@@ -191,6 +201,18 @@ namespace SqlForm.Forms
             FillSelectTable();
             selectTable.BringToFront();
             selectTable.Dock = DockStyle.Fill;
+        }
+
+        private void submitConditionConjunction_Click(object sender, EventArgs e)
+        {
+            int conditionNum = conditionFieldsGrid.Rows.Count - 1;
+            if(conditionNum%2 != 0 && conditionConjunctDropdown.SelectedIndex>=0)
+            {
+                selectConditions.Add(conditionConjunctDropdown.Text);
+                conditionFieldsGrid.Rows.Add(conditionConjunctDropdown.Text);
+                query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+                queryBox.Text = query;
+            }
         }
     }
 }
