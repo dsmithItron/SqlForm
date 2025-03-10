@@ -206,7 +206,7 @@ namespace SqlForm.Forms
         private void submitConditionConjunction_Click(object sender, EventArgs e)
         {
             int conditionNum = conditionFieldsGrid.Rows.Count - 1;
-            if(conditionNum%2 != 0 && conditionConjunctDropdown.SelectedIndex>=0)
+            if (conditionNum % 2 != 0 && conditionConjunctDropdown.SelectedIndex >= 0)
             {
                 selectConditions.Add(conditionConjunctDropdown.Text);
                 conditionFieldsGrid.Rows.Add(conditionConjunctDropdown.Text);

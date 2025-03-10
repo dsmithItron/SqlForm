@@ -28,39 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SubmitAllButton = new Button();
             selectTable = new DataGridView();
             panel1 = new Panel();
-            manualQueryButton = new Button();
-            viewQueryButton = new Button();
+            label1 = new Label();
+            SqlTableDropdown = new ComboBox();
+            SubmitAllButton = new Button();
+            queryBox = new TextBox();
+            conditionFieldsGrid = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            queryBuilderPanel = new Panel();
+            submitConditionConjunction = new Button();
+            conditionConjunctDropdown = new ComboBox();
+            FieldDropdown = new ComboBox();
+            SubmitFieldSelection = new Button();
+            SubmitConditionSelection = new Button();
+            RightConditionDropdown = new ComboBox();
+            MiddleConditionDropdown = new ComboBox();
+            LeftConditionDropdown = new ComboBox();
             selectedFieldsGrid = new DataGridView();
             field = new DataGridViewTextBoxColumn();
-            AddLeftCondition = new Button();
-            FieldDropdown = new ComboBox();
-            AddMiddleCondition = new Button();
-            AddRightCondition = new Button();
-            LeftConditionDropdown = new ComboBox();
-            MiddleConditionDropdown = new ComboBox();
-            RightConditionDropdown = new ComboBox();
-            SubmitConditionSelection = new Button();
-            SubmitFieldSelection = new Button();
-            SqlTableDropdown = new ComboBox();
-            ChooseTableLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)selectTable).BeginInit();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)conditionFieldsGrid).BeginInit();
+            queryBuilderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)selectedFieldsGrid).BeginInit();
             SuspendLayout();
-            // 
-            // SubmitAllButton
-            // 
-            SubmitAllButton.Location = new Point(351, 380);
-            SubmitAllButton.Name = "SubmitAllButton";
-            SubmitAllButton.Size = new Size(142, 39);
-            SubmitAllButton.TabIndex = 1;
-            SubmitAllButton.Text = "Finish Query Creation";
-            SubmitAllButton.UseVisualStyleBackColor = true;
-            SubmitAllButton.Visible = false;
-            SubmitAllButton.Click += FinishQueryCreationButton_Click;
             // 
             // selectTable
             // 
@@ -75,52 +67,171 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(manualQueryButton);
-            panel1.Controls.Add(viewQueryButton);
-            panel1.Controls.Add(selectedFieldsGrid);
-            panel1.Controls.Add(AddLeftCondition);
-            panel1.Controls.Add(FieldDropdown);
-            panel1.Controls.Add(AddMiddleCondition);
-            panel1.Controls.Add(AddRightCondition);
-            panel1.Controls.Add(LeftConditionDropdown);
-            panel1.Controls.Add(MiddleConditionDropdown);
-            panel1.Controls.Add(RightConditionDropdown);
-            panel1.Controls.Add(SubmitConditionSelection);
-            panel1.Controls.Add(SubmitFieldSelection);
+            panel1.Controls.Add(label1);
             panel1.Controls.Add(SqlTableDropdown);
-            panel1.Controls.Add(ChooseTableLabel);
             panel1.Controls.Add(SubmitAllButton);
+            panel1.Controls.Add(queryBox);
+            panel1.Controls.Add(conditionFieldsGrid);
+            panel1.Controls.Add(queryBuilderPanel);
+            panel1.Controls.Add(selectedFieldsGrid);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 421);
             panel1.TabIndex = 3;
             // 
-            // manualQueryButton
+            // label1
             // 
-            manualQueryButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            manualQueryButton.Location = new Point(160, 383);
-            manualQueryButton.Margin = new Padding(0);
-            manualQueryButton.Name = "manualQueryButton";
-            manualQueryButton.Size = new Size(151, 29);
-            manualQueryButton.TabIndex = 15;
-            manualQueryButton.Text = "Manually Edit Query";
-            manualQueryButton.UseVisualStyleBackColor = true;
-            manualQueryButton.Visible = false;
-            manualQueryButton.Click += ManualQueryButton_Click;
+            label1.AutoSize = true;
+            label1.Font = new Font("MS Reference Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(61, 20);
+            label1.TabIndex = 26;
+            label1.Text = "Table:";
             // 
-            // viewQueryButton
+            // SqlTableDropdown
             // 
-            viewQueryButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            viewQueryButton.Location = new Point(9, 383);
-            viewQueryButton.Margin = new Padding(0);
-            viewQueryButton.Name = "viewQueryButton";
-            viewQueryButton.Size = new Size(151, 29);
-            viewQueryButton.TabIndex = 14;
-            viewQueryButton.Text = "View Query";
-            viewQueryButton.UseVisualStyleBackColor = true;
-            viewQueryButton.Visible = false;
-            viewQueryButton.Click += ViewQueryButton_Click;
+            SqlTableDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            SqlTableDropdown.FormattingEnabled = true;
+            SqlTableDropdown.Location = new Point(79, 12);
+            SqlTableDropdown.Name = "SqlTableDropdown";
+            SqlTableDropdown.Size = new Size(121, 23);
+            SqlTableDropdown.TabIndex = 25;
+            SqlTableDropdown.SelectedValueChanged += SqlTableDropdown_SelectedValueChanged;
+            // 
+            // SubmitAllButton
+            // 
+            SubmitAllButton.BackColor = Color.Silver;
+            SubmitAllButton.FlatStyle = FlatStyle.Flat;
+            SubmitAllButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SubmitAllButton.Location = new Point(338, 380);
+            SubmitAllButton.Name = "SubmitAllButton";
+            SubmitAllButton.Size = new Size(173, 35);
+            SubmitAllButton.TabIndex = 24;
+            SubmitAllButton.Text = "Finish Query Selection";
+            SubmitAllButton.UseVisualStyleBackColor = false;
+            SubmitAllButton.Visible = false;
+            SubmitAllButton.Click += FinishQueryCreationButton_Click;
+            // 
+            // queryBox
+            // 
+            queryBox.BackColor = SystemColors.GradientActiveCaption;
+            queryBox.Location = new Point(3, 241);
+            queryBox.Multiline = true;
+            queryBox.Name = "queryBox";
+            queryBox.Size = new Size(410, 133);
+            queryBox.TabIndex = 23;
+            queryBox.Visible = false;
+            queryBox.WordWrap = false;
+            // 
+            // conditionFieldsGrid
+            // 
+            conditionFieldsGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            conditionFieldsGrid.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1 });
+            conditionFieldsGrid.Location = new Point(419, 12);
+            conditionFieldsGrid.Name = "conditionFieldsGrid";
+            conditionFieldsGrid.RowHeadersVisible = false;
+            conditionFieldsGrid.Size = new Size(215, 362);
+            conditionFieldsGrid.TabIndex = 22;
+            conditionFieldsGrid.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn1.HeaderText = "Condition Fields";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // queryBuilderPanel
+            // 
+            queryBuilderPanel.BackColor = Color.Gainsboro;
+            queryBuilderPanel.Controls.Add(submitConditionConjunction);
+            queryBuilderPanel.Controls.Add(conditionConjunctDropdown);
+            queryBuilderPanel.Controls.Add(FieldDropdown);
+            queryBuilderPanel.Controls.Add(SubmitFieldSelection);
+            queryBuilderPanel.Controls.Add(SubmitConditionSelection);
+            queryBuilderPanel.Controls.Add(RightConditionDropdown);
+            queryBuilderPanel.Controls.Add(MiddleConditionDropdown);
+            queryBuilderPanel.Controls.Add(LeftConditionDropdown);
+            queryBuilderPanel.Location = new Point(3, 51);
+            queryBuilderPanel.Name = "queryBuilderPanel";
+            queryBuilderPanel.Size = new Size(410, 184);
+            queryBuilderPanel.TabIndex = 21;
+            queryBuilderPanel.Visible = false;
+            // 
+            // submitConditionConjunction
+            // 
+            submitConditionConjunction.Location = new Point(335, 132);
+            submitConditionConjunction.Name = "submitConditionConjunction";
+            submitConditionConjunction.Size = new Size(75, 23);
+            submitConditionConjunction.TabIndex = 13;
+            submitConditionConjunction.Text = "Submit";
+            submitConditionConjunction.UseVisualStyleBackColor = true;
+            submitConditionConjunction.Click += submitConditionConjunction_Click;
+            // 
+            // conditionConjunctDropdown
+            // 
+            conditionConjunctDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            conditionConjunctDropdown.FormattingEnabled = true;
+            conditionConjunctDropdown.Location = new Point(253, 132);
+            conditionConjunctDropdown.Name = "conditionConjunctDropdown";
+            conditionConjunctDropdown.Size = new Size(76, 23);
+            conditionConjunctDropdown.TabIndex = 12;
+            // 
+            // FieldDropdown
+            // 
+            FieldDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            FieldDropdown.FormattingEnabled = true;
+            FieldDropdown.Location = new Point(208, 41);
+            FieldDropdown.Name = "FieldDropdown";
+            FieldDropdown.Size = new Size(121, 23);
+            FieldDropdown.TabIndex = 11;
+            // 
+            // SubmitFieldSelection
+            // 
+            SubmitFieldSelection.Location = new Point(335, 40);
+            SubmitFieldSelection.Name = "SubmitFieldSelection";
+            SubmitFieldSelection.Size = new Size(75, 23);
+            SubmitFieldSelection.TabIndex = 4;
+            SubmitFieldSelection.Text = "Submit";
+            SubmitFieldSelection.UseVisualStyleBackColor = true;
+            SubmitFieldSelection.UseWaitCursor = true;
+            SubmitFieldSelection.Click += SubmitFieldSelection_Click;
+            // 
+            // SubmitConditionSelection
+            // 
+            SubmitConditionSelection.Location = new Point(335, 103);
+            SubmitConditionSelection.Name = "SubmitConditionSelection";
+            SubmitConditionSelection.Size = new Size(75, 23);
+            SubmitConditionSelection.TabIndex = 5;
+            SubmitConditionSelection.Text = "Submit";
+            SubmitConditionSelection.UseVisualStyleBackColor = true;
+            SubmitConditionSelection.Click += SubmitConditionSelection_Click;
+            // 
+            // RightConditionDropdown
+            // 
+            RightConditionDropdown.FormattingEnabled = true;
+            RightConditionDropdown.Location = new Point(208, 103);
+            RightConditionDropdown.Name = "RightConditionDropdown";
+            RightConditionDropdown.Size = new Size(121, 23);
+            RightConditionDropdown.TabIndex = 6;
+            // 
+            // MiddleConditionDropdown
+            // 
+            MiddleConditionDropdown.FormattingEnabled = true;
+            MiddleConditionDropdown.Location = new Point(133, 103);
+            MiddleConditionDropdown.Name = "MiddleConditionDropdown";
+            MiddleConditionDropdown.Size = new Size(69, 23);
+            MiddleConditionDropdown.TabIndex = 7;
+            // 
+            // LeftConditionDropdown
+            // 
+            LeftConditionDropdown.FormattingEnabled = true;
+            LeftConditionDropdown.Location = new Point(6, 103);
+            LeftConditionDropdown.Name = "LeftConditionDropdown";
+            LeftConditionDropdown.Size = new Size(121, 23);
+            LeftConditionDropdown.TabIndex = 8;
             // 
             // selectedFieldsGrid
             // 
@@ -140,114 +251,6 @@
             field.Name = "field";
             field.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
-            // AddLeftCondition
-            // 
-            AddLeftCondition.Location = new Point(46, 137);
-            AddLeftCondition.Name = "AddLeftCondition";
-            AddLeftCondition.Size = new Size(53, 23);
-            AddLeftCondition.TabIndex = 12;
-            AddLeftCondition.Text = "Add";
-            AddLeftCondition.UseVisualStyleBackColor = true;
-            AddLeftCondition.Visible = false;
-            // 
-            // FieldDropdown
-            // 
-            FieldDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            FieldDropdown.FormattingEnabled = true;
-            FieldDropdown.Location = new Point(211, 60);
-            FieldDropdown.Name = "FieldDropdown";
-            FieldDropdown.Size = new Size(121, 23);
-            FieldDropdown.TabIndex = 11;
-            FieldDropdown.Visible = false;
-            // 
-            // AddMiddleCondition
-            // 
-            AddMiddleCondition.Location = new Point(150, 137);
-            AddMiddleCondition.Name = "AddMiddleCondition";
-            AddMiddleCondition.Size = new Size(45, 23);
-            AddMiddleCondition.TabIndex = 10;
-            AddMiddleCondition.Text = "Add";
-            AddMiddleCondition.UseVisualStyleBackColor = true;
-            AddMiddleCondition.Visible = false;
-            // 
-            // AddRightCondition
-            // 
-            AddRightCondition.Location = new Point(244, 137);
-            AddRightCondition.Name = "AddRightCondition";
-            AddRightCondition.Size = new Size(53, 23);
-            AddRightCondition.TabIndex = 9;
-            AddRightCondition.Text = "Add";
-            AddRightCondition.UseVisualStyleBackColor = true;
-            AddRightCondition.Visible = false;
-            // 
-            // LeftConditionDropdown
-            // 
-            LeftConditionDropdown.FormattingEnabled = true;
-            LeftConditionDropdown.Location = new Point(9, 108);
-            LeftConditionDropdown.Name = "LeftConditionDropdown";
-            LeftConditionDropdown.Size = new Size(121, 23);
-            LeftConditionDropdown.TabIndex = 8;
-            LeftConditionDropdown.Visible = false;
-            // 
-            // MiddleConditionDropdown
-            // 
-            MiddleConditionDropdown.FormattingEnabled = true;
-            MiddleConditionDropdown.Location = new Point(136, 108);
-            MiddleConditionDropdown.Name = "MiddleConditionDropdown";
-            MiddleConditionDropdown.Size = new Size(69, 23);
-            MiddleConditionDropdown.TabIndex = 7;
-            MiddleConditionDropdown.Visible = false;
-            // 
-            // RightConditionDropdown
-            // 
-            RightConditionDropdown.FormattingEnabled = true;
-            RightConditionDropdown.Location = new Point(211, 108);
-            RightConditionDropdown.Name = "RightConditionDropdown";
-            RightConditionDropdown.Size = new Size(121, 23);
-            RightConditionDropdown.TabIndex = 6;
-            RightConditionDropdown.Visible = false;
-            // 
-            // SubmitConditionSelection
-            // 
-            SubmitConditionSelection.Location = new Point(338, 108);
-            SubmitConditionSelection.Name = "SubmitConditionSelection";
-            SubmitConditionSelection.Size = new Size(75, 23);
-            SubmitConditionSelection.TabIndex = 5;
-            SubmitConditionSelection.Text = "Submit";
-            SubmitConditionSelection.UseVisualStyleBackColor = true;
-            SubmitConditionSelection.Visible = false;
-            SubmitConditionSelection.Click += SubmitConditionSelection_Click;
-            // 
-            // SubmitFieldSelection
-            // 
-            SubmitFieldSelection.Location = new Point(338, 59);
-            SubmitFieldSelection.Name = "SubmitFieldSelection";
-            SubmitFieldSelection.Size = new Size(75, 23);
-            SubmitFieldSelection.TabIndex = 4;
-            SubmitFieldSelection.Text = "Submit";
-            SubmitFieldSelection.UseVisualStyleBackColor = true;
-            SubmitFieldSelection.Visible = false;
-            SubmitFieldSelection.Click += SubmitFieldSelection_Click;
-            // 
-            // SqlTableDropdown
-            // 
-            SqlTableDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            SqlTableDropdown.FormattingEnabled = true;
-            SqlTableDropdown.Location = new Point(95, 31);
-            SqlTableDropdown.Name = "SqlTableDropdown";
-            SqlTableDropdown.Size = new Size(202, 23);
-            SqlTableDropdown.TabIndex = 3;
-            SqlTableDropdown.SelectedValueChanged += SqlTableDropdown_SelectedValueChanged;
-            // 
-            // ChooseTableLabel
-            // 
-            ChooseTableLabel.Font = new Font("MS Reference Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ChooseTableLabel.Location = new Point(31, 31);
-            ChooseTableLabel.Name = "ChooseTableLabel";
-            ChooseTableLabel.Size = new Size(67, 27);
-            ChooseTableLabel.TabIndex = 2;
-            ChooseTableLabel.Text = "Table: ";
-            // 
             // SelectForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -259,29 +262,35 @@
             Text = "SelectForm";
             ((System.ComponentModel.ISupportInitialize)selectTable).EndInit();
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)conditionFieldsGrid).EndInit();
+            queryBuilderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)selectedFieldsGrid).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button SubmitAllButton;
         private DataGridView selectTable;
         private Panel panel1;
         private Label ChooseTableLabel;
-        private ComboBox SqlTableDropdown;
         private Button SubmitConditionSelection;
         private Button SubmitFieldSelection;
         private ComboBox RightConditionDropdown;
-        private Button AddMiddleCondition;
-        private Button AddRightCondition;
         private ComboBox LeftConditionDropdown;
         private ComboBox MiddleConditionDropdown;
         private ComboBox FieldDropdown;
-        private Button AddLeftCondition;
         private DataGridView selectedFieldsGrid;
         private DataGridViewTextBoxColumn field;
-        private Button manualQueryButton;
-        private Button viewQueryButton;
+        private Panel queryBuilderPanel;
+        private DataGridView conditionFieldsGrid;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private TextBox queryBox;
+        private ComboBox conditionConjunctDropdown;
+        private Button submitConditionConjunction;
+        private Button finishQueryCreationButton;
+        private Label label1;
+        private ComboBox SqlTableDropdown;
+        private Button SubmitAllButton;
     }
 }
