@@ -2,13 +2,34 @@
 using System.Text.Json;
 using System.Xml;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static SqlForm.Classes.ApplicationSettings;
 
 namespace SqlForm.Classes
 {
     internal static class ApplicationSettings
     {
+        public static List<Profile> Profiles = new();
+
+        public class Profile
+        {
+            public string ProfileName { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
+            public bool HideToolTips { get; set; }
+            public int MaxSqlSelection { get; set; }
+
+            public Profile()
+            {
+                ProfileName = "";
+                Username = "";
+                Password = "";
+            }
+        }
+
+        public static string ProfileName = "";
         public static string Username = "";
         public static string Password = "";
+        public static bool HideToolTips = false;
         public static int MaxSqlSelection = 1;
 
         /// <summary>
@@ -20,15 +41,27 @@ namespace SqlForm.Classes
         {
             if (File.Exists("SqlFormSettings.json"))
             {
-                string json = File.ReadAllText("SqlFormSettings.json");
-                JsonDocument doc = JsonDocument.Parse(json);
-                var settingsArray = doc.RootElement.GetProperty("Settings").EnumerateArray();
-                // Should only run once as settings only has one object 
-                foreach (var settings in settingsArray)
+                try
                 {
-                    Username = settings.GetProperty("Username").ToString();
-                    Password = settings.GetProperty("Password").ToString();
-                    MaxSqlSelection = Int32.Parse(settings.GetProperty("MaxSqlSelection").ToString());
+                    string json = File.ReadAllText("SqlFormSettings.json");
+                    JsonDocument doc = JsonDocument.Parse(json);
+                    var profilesArray = doc.RootElement.GetProperty("Profiles").EnumerateArray();
+                    // Should only run once as settings only has one object 
+                    foreach (var profile in profilesArray)
+                    {
+                        Profiles.Add(new Profile
+                        {
+                            ProfileName = profile.GetProperty("ProfileName").ToString(),
+                            Username = profile.GetProperty("Username").ToString(),
+                            Password = profile.GetProperty("Password").ToString(),
+                            HideToolTips = bool.Parse(profile.GetProperty("HideToolTips").ToString()),
+                            MaxSqlSelection = int.Parse(profile.GetProperty("MaxSqlSelection").ToString())
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error in Loading Settings: {ex}");
                 }
             }
         }
@@ -57,13 +90,15 @@ namespace SqlForm.Classes
             // Changing this means prior settings file needs to be deleted
             var settings = new
             {
-                Settings = new[]
+                Profiles = new List<Profile>
                 {
-                    new
+                    new Profile
                     {
-                        Username,
-                        Password,
-                        MaxSqlSelection
+                        ProfileName = ProfileName,
+                        Username = Username,
+                        Password = Password,
+                        HideToolTips = HideToolTips,
+                        MaxSqlSelection = MaxSqlSelection
                     }
                 }
             };
