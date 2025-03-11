@@ -159,5 +159,10 @@ namespace SqlForm.Classes
             if (CheckForHistory()) { return true; }
             return false;
         }
+
+        public static bool AddQueryToHistory(string query)
+        {
+            return true;
+        }
     }
 }

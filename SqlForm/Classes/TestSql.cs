@@ -10,7 +10,7 @@ namespace SqlForm.Classes
     {
         public static string tableName = "";
         // This needs to be kept current with each table that needs to be accessed
-        public static List<string> tableNames = new() {("Specform_all_options"),("Xml_sql_mapping")};
+        public static List<string> tableNames = new() { ("Specform_all_options"), ("Xml_sql_mapping") };
         private static string connectionString = "Data Source=../../../Resources/testDB.db";
 
         /// <summary>
@@ -24,7 +24,6 @@ namespace SqlForm.Classes
                 {
                     connection.Open();
                     SqliteCommand command = connection.CreateCommand();
-                    SqliteDataReader reader;
 
                     // --------------------------------------------------------------------------------------
                     // CREATE Specform_all_options
@@ -193,7 +192,7 @@ namespace SqlForm.Classes
         }
         public static string BuildUpdateQuery(string tableName, List<string> updateFields, List<string> updateValues, List<string> updateConditions)
         {
-            if (updateFields.Count != updateValues.Count) 
+            if (updateFields.Count != updateValues.Count)
             {
                 throw new Exception("The number of fields and values must be the same.");
             }
@@ -232,64 +231,87 @@ namespace SqlForm.Classes
         public static DataTable ReaderQuery(string query)
         {
             DataTable selectTable = new();
-            using (SqliteConnection connection = new(connectionString))
+
+            // default table returned, cleared if msgBoxResult != No
+            selectTable.Columns.Add("Message", typeof(string));
+            selectTable.Rows.Add($"{query} cancelled");
+
+            var msgBoxResult = MessageBox.Show
+                               (
+                                $"{query}",
+                                $"Select Command",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                               );
+
+            if (msgBoxResult != DialogResult.No)
             {
-                try
+                ApplicationHistory.AddQueryToHistory(query);
+                selectTable = new();
+                using (SqliteConnection connection = new(connectionString))
                 {
-                    connection.Open();
-                    SqliteCommand command = connection.CreateCommand();
-                    SqliteDataReader reader;
-
-                    command.CommandText = query;
-                    MessageBox.Show($"{command.CommandText}",
-                                    $"Select Command",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    reader = command.ExecuteReader();
-
-                    selectTable.Load(reader);
-                    foreach (DataRow row in selectTable.Rows)
+                    try
                     {
-                        for (int i = 0; i < selectTable.Columns.Count; i++)
+                        connection.Open();
+                        SqliteCommand command = connection.CreateCommand();
+                        SqliteDataReader reader;
+
+                        command.CommandText = query;
+                        reader = command.ExecuteReader();
+
+                        selectTable.Load(reader);
+                        foreach (DataRow row in selectTable.Rows)
                         {
-                            if (row.IsNull(i)) // Check if the value is NULL in the current DataRow
+                            for (int i = 0; i < selectTable.Columns.Count; i++)
                             {
-                                // Replace NULL value with "Null" string
-                                row[i] = "NULL";
+                                if (row.IsNull(i)) // Check if the value is NULL in the current DataRow
+                                {
+                                    // Replace NULL value with "Null" string
+                                    row[i] = "NULL";
+                                }
                             }
                         }
+                        return selectTable;
                     }
-                    return selectTable;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
-                                    $"Error in testsql Select",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
+                                        $"Error in testsql Select",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             return selectTable;
         }
         public static void NonReaderQuery(string query)
         {
-            using (SqliteConnection connection = new(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    SqliteCommand command = connection.CreateCommand();
-                    SqliteDataReader reader;
+            var msgBoxResult = MessageBox.Show
+                               (
+                                $"{query}",
+                                $"Select Command",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                               );
 
-                    command.CommandText = query;
-                    MessageBox.Show($"{command.CommandText}",
-                                    $"Query Command",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
+            if (msgBoxResult != DialogResult.No)
+            {
+                using (SqliteConnection connection = new(connectionString))
                 {
-                    MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
-                                    $"Error in testsql NonReaderQuery",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        connection.Open();
+                        SqliteCommand command = connection.CreateCommand();
+
+                        command.CommandText = query;
+                        MessageBox.Show($"{command.CommandText}",
+                                        $"Query Command",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
+                                        $"Error in testsql NonReaderQuery",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
