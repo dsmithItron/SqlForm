@@ -135,19 +135,6 @@
         88fM7QgjkueXVibCCFWzWNJ/T1fXL05Hr/ysA9EMAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="DeleteSidebarButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAYhJREFUWEftlr8uBFEUhzdR8AAU1JQ0/jQ6noAnoNH6V6wGL8ATUCvWA0hotLwA
-        b0DJ3DnnroLxG/tLJOvI3nN3I5Hsl3zJ7GbOt7Oz2Tu3MaQfwluYg7N8+bdUVTUWVBQKjkf59uApVQ9L
-        lZsfRrkto1YdcWydg1lmfIjIEqIXiLfwDd+/P8gnZ1t1C81F5nuDwfPuWL8G1TPme4OrncLAHm5hcxB+
-        tcpykvl/QqG6LFG2BmHdYjYd3Lpj67fMUvWI2XTKGDfNWJZxg9l0QoyrdswvWivMpvPabs9YsRxfYpxm
-        Np16ecV68GEFPdaNetlm1gcCz91BryHqE3N+MHxvRT2iccecHwQuu4MZtpjzg4fIqRF0KifM+QkiO3Y0
-        3dCWbeb8FCLrVtQjHmxrzPnB8IIV9YjGPHN+iqKYsKIe0RhnLg8sJGKFU6xnmckHe7tHK56kygMz+SBy
-        bcZTxCwz+WA7tW/GE8TfeJeZfPAgGcGG4gAXctXZave2c64261lmhgz5hUbjEzyrTlKPaZgnAAAAAElF
-        TkSuQmCC
-</value>
-  </data>
   <data name="InsertSidebarButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -174,7 +161,7 @@
   <data name="HomeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DwAACw8BkvkDpQAAAf5JREFUWEftVztLA0EQDqggWvjWTkURETsfIII/IYqgdtaCYGGdRrC1sbCwFX+E
+        DQAACw0B7QfALAAAAf5JREFUWEftVztLA0EQDqggWvjWTkURETsfIII/IYqgdtaCYGGdRrC1sbCwFX+E
         NmKvhVhopRBErEzubm9nL6Kc3xyTqGSj5nFBIR8Muftmdubb2UeSRDUwxgwT0ZC81hc60Es+keOTVopo
         Tej4EYZhs2/0niL9pozejQzPzLFPwuKBUmoAhc4x8yw6kBSau5Fkjn0cw5zneb1YopG8QVxrFFwptNYz
         mG0a7b5yjBkVugDshUFl6AL26BLNI+7QNxTmzSNakNDygcJbaPMLPo8wkzahi8A+jkFsDnYHEScqpyYr

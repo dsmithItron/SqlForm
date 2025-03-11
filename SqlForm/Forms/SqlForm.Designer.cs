@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlForm));
             SidebarPanel = new Panel();
             SelectSidebarButton = new Button();
-            DeleteSidebarButton = new Button();
             InsertSidebarButton = new Button();
             UpdateSidebarButton = new Button();
             TopSidebarPanel = new Panel();
@@ -48,7 +47,6 @@
             // 
             SidebarPanel.BackColor = Color.FromArgb(3, 64, 107);
             SidebarPanel.Controls.Add(SelectSidebarButton);
-            SidebarPanel.Controls.Add(DeleteSidebarButton);
             SidebarPanel.Controls.Add(InsertSidebarButton);
             SidebarPanel.Controls.Add(UpdateSidebarButton);
             SidebarPanel.Controls.Add(TopSidebarPanel);
@@ -75,23 +73,6 @@
             SelectSidebarButton.UseVisualStyleBackColor = true;
             SelectSidebarButton.Click += SelectSidebarButton_Click;
             // 
-            // DeleteSidebarButton
-            // 
-            DeleteSidebarButton.FlatAppearance.BorderSize = 0;
-            DeleteSidebarButton.FlatStyle = FlatStyle.Flat;
-            DeleteSidebarButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            DeleteSidebarButton.ForeColor = Color.White;
-            DeleteSidebarButton.Image = (Image)resources.GetObject("DeleteSidebarButton.Image");
-            DeleteSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
-            DeleteSidebarButton.Location = new Point(0, 247);
-            DeleteSidebarButton.Margin = new Padding(0);
-            DeleteSidebarButton.Name = "DeleteSidebarButton";
-            DeleteSidebarButton.Size = new Size(180, 60);
-            DeleteSidebarButton.TabIndex = 3;
-            DeleteSidebarButton.Text = "Delete";
-            DeleteSidebarButton.UseVisualStyleBackColor = true;
-            DeleteSidebarButton.Click += DeleteSidebarButton_Click;
-            // 
             // InsertSidebarButton
             // 
             InsertSidebarButton.FlatAppearance.BorderSize = 0;
@@ -100,7 +81,7 @@
             InsertSidebarButton.ForeColor = Color.White;
             InsertSidebarButton.Image = (Image)resources.GetObject("InsertSidebarButton.Image");
             InsertSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
-            InsertSidebarButton.Location = new Point(0, 127);
+            InsertSidebarButton.Location = new Point(0, 187);
             InsertSidebarButton.Margin = new Padding(0);
             InsertSidebarButton.Name = "InsertSidebarButton";
             InsertSidebarButton.Size = new Size(180, 60);
@@ -117,7 +98,7 @@
             UpdateSidebarButton.ForeColor = Color.White;
             UpdateSidebarButton.Image = (Image)resources.GetObject("UpdateSidebarButton.Image");
             UpdateSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
-            UpdateSidebarButton.Location = new Point(0, 187);
+            UpdateSidebarButton.Location = new Point(0, 127);
             UpdateSidebarButton.Margin = new Padding(0);
             UpdateSidebarButton.Name = "UpdateSidebarButton";
             UpdateSidebarButton.Size = new Size(180, 60);
@@ -210,7 +191,6 @@
         private Panel TopSidebarPanel;
         private Button UpdateSidebarButton;
         private Button InsertSidebarButton;
-        private Button DeleteSidebarButton;
         private Button SelectSidebarButton;
         private Label HeaderLabel;
         private Button HomeButton;

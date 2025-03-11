@@ -130,7 +130,6 @@ namespace SqlForm
         private void DeleteSidebarButton_Click(object sender, EventArgs e)
         {
             UpdateButtonColor((Button)sender);
-            OpenChildForm(new DeleteForm());
         }
 
         private void UpdateSidebarButton_Click(object sender, EventArgs e)
