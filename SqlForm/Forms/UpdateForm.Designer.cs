@@ -259,7 +259,6 @@
             submitFieldSelection.TabIndex = 4;
             submitFieldSelection.Text = "Submit";
             submitFieldSelection.UseVisualStyleBackColor = true;
-            submitFieldSelection.UseWaitCursor = true;
             // 
             // selectedFieldsGrid
             // 

@@ -30,7 +30,7 @@
         {
             tableLabel = new Label();
             SqlTableDropdown = new ComboBox();
-            SubmitAllButton = new Button();
+            submitAllButton = new Button();
             queryBox = new TextBox();
             conditionFieldsGrid = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
@@ -76,19 +76,19 @@
             SqlTableDropdown.TabIndex = 25;
             SqlTableDropdown.SelectedValueChanged += SqlTableDropdown_SelectedValueChanged;
             // 
-            // SubmitAllButton
+            // submitAllButton
             // 
-            SubmitAllButton.BackColor = Color.Silver;
-            SubmitAllButton.FlatStyle = FlatStyle.Flat;
-            SubmitAllButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            SubmitAllButton.Location = new Point(335, 380);
-            SubmitAllButton.Name = "SubmitAllButton";
-            SubmitAllButton.Size = new Size(173, 35);
-            SubmitAllButton.TabIndex = 24;
-            SubmitAllButton.Text = "Finish Query Selection";
-            SubmitAllButton.UseVisualStyleBackColor = false;
-            SubmitAllButton.Visible = false;
-            SubmitAllButton.Click += FinishQueryCreationButton_Click;
+            submitAllButton.BackColor = Color.Silver;
+            submitAllButton.FlatStyle = FlatStyle.Flat;
+            submitAllButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            submitAllButton.Location = new Point(335, 380);
+            submitAllButton.Name = "submitAllButton";
+            submitAllButton.Size = new Size(173, 35);
+            submitAllButton.TabIndex = 24;
+            submitAllButton.Text = "Finish Query Selection";
+            submitAllButton.UseVisualStyleBackColor = false;
+            submitAllButton.Visible = false;
+            submitAllButton.Click += FinishQueryCreationButton_Click;
             // 
             // queryBox
             // 
@@ -111,6 +111,7 @@
             conditionFieldsGrid.Size = new Size(215, 362);
             conditionFieldsGrid.TabIndex = 22;
             conditionFieldsGrid.Visible = false;
+            conditionFieldsGrid.CellClick += ConditionFieldsGrid_CellClick;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -258,7 +259,6 @@
             submitFieldSelection.TabIndex = 4;
             submitFieldSelection.Text = "Submit";
             submitFieldSelection.UseVisualStyleBackColor = true;
-            submitFieldSelection.UseWaitCursor = true;
             submitFieldSelection.Click += SubmitFieldSelection_Click;
             // 
             // selectedFieldsGrid
@@ -271,6 +271,7 @@
             selectedFieldsGrid.Size = new Size(157, 362);
             selectedFieldsGrid.TabIndex = 30;
             selectedFieldsGrid.Visible = false;
+            selectedFieldsGrid.CellClick += SelectedFieldsGrid_CellClick;
             // 
             // field
             // 
@@ -287,7 +288,7 @@
             Controls.Add(selectedFieldsGrid);
             Controls.Add(SqlTableDropdown);
             Controls.Add(tableLabel);
-            Controls.Add(SubmitAllButton);
+            Controls.Add(submitAllButton);
             Controls.Add(queryBuilderPanel);
             Controls.Add(conditionFieldsGrid);
             Controls.Add(queryBox);
@@ -304,10 +305,9 @@
         }
 
         #endregion
-        private Button finishQueryCreationButton;
         private Label tableLabel;
         private ComboBox SqlTableDropdown;
-        private Button SubmitAllButton;
+        private Button submitAllButton;
         private TextBox queryBox;
         private DataGridView conditionFieldsGrid;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;

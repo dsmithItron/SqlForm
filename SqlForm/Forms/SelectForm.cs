@@ -110,7 +110,7 @@ namespace SqlForm.Forms
 
             queryBox.Visible = true;
 
-            SubmitAllButton.Visible = true;
+            submitAllButton.Visible = true;
 
             query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
             queryBox.Text = query;
@@ -204,6 +204,65 @@ namespace SqlForm.Forms
             selectedTable.AutoResizeColumns();
             selectedTable.BringToFront();
             selectedTable.Dock = DockStyle.Fill;
+        }
+
+        private void ConditionFieldsGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int conditionNum = conditionFieldsGrid.Rows.Count - 1;
+            var test = e.ToString();
+            var testCell = conditionFieldsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            var msgBoxResult = MessageBox.Show
+                               (
+                                $"Do you want to remove the condition field \"{testCell.Value}\"",
+                                $"Remove Condition",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                               );
+            if (conditionNum > 1)
+            {
+                MessageBox.Show
+                    (
+                    $"Ensure that query string is still valid after removals",
+                    $"Remove Condition Advice",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning
+                    );
+            }
+            if (msgBoxResult == DialogResult.Yes)
+            {
+                selectConditions.RemoveAt(selectConditions.IndexOf(testCell.Value.ToString()));
+                conditionFieldsGrid.Rows.RemoveAt(e.RowIndex);
+            }
+            if (conditionFieldsGrid.Rows.Count <= 1)
+            {
+                conditionFieldsGrid.Visible = false;
+                conditionFieldsGrid = new();
+                conditionFieldsGrid.Visible = false;
+                query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+                queryBox.Text = query;
+            }
+        }
+        private void SelectedFieldsGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var testCell = selectedFieldsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            var msgBoxResult = MessageBox.Show
+                               (
+                                $"Do you want to remove the select field \"{testCell.Value}\"",
+                                $"Remove Selected Field",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                               );
+
+            if(msgBoxResult == DialogResult.Yes)
+            {
+                selectFields.RemoveAt(selectFields.IndexOf(testCell.Value.ToString()));
+                selectedFieldsGrid.Rows.RemoveAt(e.RowIndex);
+                query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
+                queryBox.Text = query;
+            }
+            if (selectedFieldsGrid.Rows.Count <= 1) 
+            {
+                selectedFieldsGrid.Visible = false;
+                selectedFieldsGrid = new();
+                selectedFieldsGrid.Visible = false;
+            }
         }
     }
 }
