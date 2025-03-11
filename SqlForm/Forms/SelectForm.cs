@@ -18,6 +18,9 @@ namespace SqlForm.Forms
         List<String> selectFields = new();
         List<String> selectConditions = new();
         List<string> tableColumns = new();
+        // references to be used for object creation
+        DataGridView selectedTable; // used in FillSelectTable and FinishQueryCreationButton_Click
+        Label selectedTableLabel; // used in FinishQueryCreationButton_Click
         public SelectForm()
         {
             InitializeComponent();
@@ -36,7 +39,7 @@ namespace SqlForm.Forms
 
         private void FillSelectTable()
         {
-            selectTable.DataSource = TestSql.ReaderQuery(query);
+            selectedTable.DataSource = TestSql.ReaderQuery(query);
         }
 
         private void FillTableDropdown()
@@ -50,46 +53,46 @@ namespace SqlForm.Forms
 
         private void FillFieldDropDown()
         {
-            FieldDropdown.Items.Clear();
+            fieldDropdown.Items.Clear();
             foreach (string field in tableColumns)
             {
-                FieldDropdown.Items.Add(field);
+                fieldDropdown.Items.Add(field);
             }
         }
 
         private void FillConditionalDropdown()
         {
-            LeftConditionDropdown.Items.Clear();
-            MiddleConditionDropdown.Items.Clear();
-            RightConditionDropdown.Items.Clear();
+            leftConditionDropdown.Items.Clear();
+            middleConditionDropdown.Items.Clear();
+            rightConditionDropdown.Items.Clear();
 
             foreach (string field in tableColumns)
             {
-                LeftConditionDropdown.Items.Add(field);
-                RightConditionDropdown.Items.Add(field);
+                leftConditionDropdown.Items.Add(field);
+                rightConditionDropdown.Items.Add(field);
             }
-            MiddleConditionDropdown.Items.Add("=");
-            MiddleConditionDropdown.Items.Add(">");
-            MiddleConditionDropdown.Items.Add("<");
-            MiddleConditionDropdown.Items.Add(">=");
-            MiddleConditionDropdown.Items.Add("<=");
-            MiddleConditionDropdown.Items.Add("<>");
-            MiddleConditionDropdown.Items.Add("like");
-            MiddleConditionDropdown.Items.Add("between");
-            MiddleConditionDropdown.Items.Add("in");
+            middleConditionDropdown.Items.Add("=");
+            middleConditionDropdown.Items.Add(">");
+            middleConditionDropdown.Items.Add("<");
+            middleConditionDropdown.Items.Add(">=");
+            middleConditionDropdown.Items.Add("<=");
+            middleConditionDropdown.Items.Add("<>");
+            middleConditionDropdown.Items.Add("like");
+            middleConditionDropdown.Items.Add("between");
+            middleConditionDropdown.Items.Add("in");
 
 
             foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectLeft"])
             {
-                LeftConditionDropdown.Items.Add(condition);
+                leftConditionDropdown.Items.Add(condition);
             }
             foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectMiddle"])
             {
-                MiddleConditionDropdown.Items.Add(condition);
+                middleConditionDropdown.Items.Add(condition);
             }
             foreach (string condition in ApplicationHistory.tableConditions[SqlTableDropdown.Text]["SelectRight"])
             {
-                RightConditionDropdown.Items.Add(condition);
+                rightConditionDropdown.Items.Add(condition);
             }
 
             conditionConjunctDropdown.Items.Add("AND");
@@ -118,11 +121,11 @@ namespace SqlForm.Forms
         {
             // If an item was selected from dropdown
             // Prevents pressing button 
-            if (FieldDropdown.SelectedIndex >= 0 && !selectFields.Contains(FieldDropdown.SelectedItem.ToString()))
+            if (fieldDropdown.SelectedIndex >= 0 && !selectFields.Contains(fieldDropdown.SelectedItem.ToString()))
             {
-                selectFields.Add(FieldDropdown.SelectedItem.ToString());
-                selectedFieldsGrid.Rows.Add(FieldDropdown.SelectedItem.ToString());
-                FieldDropdown.SelectedIndex = -1;
+                selectFields.Add(fieldDropdown.SelectedItem.ToString());
+                selectedFieldsGrid.Rows.Add(fieldDropdown.SelectedItem.ToString());
+                fieldDropdown.SelectedIndex = -1;
                 selectedFieldsGrid.Visible = true;
 
                 query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
@@ -136,31 +139,31 @@ namespace SqlForm.Forms
             int conditionNum = conditionFieldsGrid.Rows.Count - 1;
             if (conditionNum == 0 || conditionNum % 2 == 0)
             {
-                string val1 = LeftConditionDropdown.Text, val2 = MiddleConditionDropdown.Text, val3 = RightConditionDropdown.Text;
+                string val1 = leftConditionDropdown.Text, val2 = middleConditionDropdown.Text, val3 = rightConditionDropdown.Text;
                 if (val1 != "" && val2 != "" && val3 != "")
                 {
-                    if (!LeftConditionDropdown.Items.Contains(val1))
+                    if (!leftConditionDropdown.Items.Contains(val1))
                     {
-                        LeftConditionDropdown.Items.Add(val1);
+                        leftConditionDropdown.Items.Add(val1);
                     }
-                    if (!MiddleConditionDropdown.Items.Contains(val2))
+                    if (!middleConditionDropdown.Items.Contains(val2))
                     {
-                        MiddleConditionDropdown.Items.Add(val2);
+                        middleConditionDropdown.Items.Add(val2);
                     }
-                    if (!RightConditionDropdown.Items.Contains(val3))
+                    if (!rightConditionDropdown.Items.Contains(val3))
                     {
-                        RightConditionDropdown.Items.Add(val3);
+                        rightConditionDropdown.Items.Add(val3);
                     }
                     selectConditions.Add($"{val1} {val2} {val3} ");
 
-                    LeftConditionDropdown.SelectedIndex = -1;
-                    LeftConditionDropdown.Text = "";
+                    leftConditionDropdown.SelectedIndex = -1;
+                    leftConditionDropdown.Text = "";
 
-                    MiddleConditionDropdown.SelectedIndex = -1;
-                    MiddleConditionDropdown.Text = "";
+                    middleConditionDropdown.SelectedIndex = -1;
+                    middleConditionDropdown.Text = "";
 
-                    RightConditionDropdown.SelectedIndex = -1;
-                    RightConditionDropdown.Text = "";
+                    rightConditionDropdown.SelectedIndex = -1;
+                    rightConditionDropdown.Text = "";
 
 
                     conditionFieldsGrid.Rows.Add($"{val1} {val2} {val3} ");
@@ -172,38 +175,7 @@ namespace SqlForm.Forms
             }
         }
 
-        private void ViewQueryButton_Click(object sender, EventArgs e)
-        {
-            QueryForm queryForm = new QueryForm();
-
-            queryForm.parentForm = this;
-            queryForm.canEdit = false;
-            queryForm.queryString = query;
-
-            queryForm.ChangeData();
-            queryForm.Show();
-        }
-
-        private void ManualQueryButton_Click(object sender, EventArgs e)
-        {
-            QueryForm queryForm = new QueryForm();
-
-            queryForm.parentForm = this;
-            queryForm.canEdit = true;
-            queryForm.queryString = query;
-
-            queryForm.ChangeData();
-            queryForm.Show();
-        }
-
-        private void FinishQueryCreationButton_Click(object sender, EventArgs e)
-        {
-            FillSelectTable();
-            selectTable.BringToFront();
-            selectTable.Dock = DockStyle.Fill;
-        }
-
-        private void submitConditionConjunction_Click(object sender, EventArgs e)
+        private void SubmitConditionConjunction_Click(object sender, EventArgs e)
         {
             int conditionNum = conditionFieldsGrid.Rows.Count - 1;
             if (conditionNum % 2 != 0 && conditionConjunctDropdown.SelectedIndex >= 0)
@@ -213,6 +185,25 @@ namespace SqlForm.Forms
                 query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
                 queryBox.Text = query;
             }
+        }
+
+        private void FinishQueryCreationButton_Click(object sender, EventArgs e)
+        {
+            selectedTable = new();
+            selectedTableLabel = new();
+            FillSelectTable();
+
+            this.Controls.Add(selectedTableLabel);
+            selectedTableLabel.Text = "Table Selected: " + SqlTableDropdown.Text;
+            selectedTableLabel.TextAlign = ContentAlignment.MiddleCenter;
+            selectedTableLabel.Dock = DockStyle.Top;
+            selectedTableLabel.BringToFront();
+
+            this.Controls.Add(selectedTable);
+            selectedTable.RowHeadersVisible = false;
+            selectedTable.AutoResizeColumns();
+            selectedTable.BringToFront();
+            selectedTable.Dock = DockStyle.Fill;
         }
     }
 }

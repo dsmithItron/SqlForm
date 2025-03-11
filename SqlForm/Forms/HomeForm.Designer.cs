@@ -28,32 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SubmitButton = new Button();
+            infoLabel = new Label();
+            textBox1 = new TextBox();
             SuspendLayout();
             // 
-            // SubmitButton
+            // infoLabel
             // 
-            SubmitButton.Location = new Point(363, 214);
-            SubmitButton.Name = "SubmitButton";
-            SubmitButton.Size = new Size(75, 23);
-            SubmitButton.TabIndex = 1;
-            SubmitButton.Text = "Submit";
-            SubmitButton.UseVisualStyleBackColor = true;
-            SubmitButton.Click += SubmitButton_Click;
+            infoLabel.Font = new Font("MS Reference Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            infoLabel.Location = new Point(12, 21);
+            infoLabel.Name = "infoLabel";
+            infoLabel.Size = new Size(141, 23);
+            infoLabel.TabIndex = 0;
+            infoLabel.Text = "Info";
+            infoLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(12, 47);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(141, 63);
+            textBox1.TabIndex = 1;
             // 
             // HomeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 421);
-            Controls.Add(SubmitButton);
+            Controls.Add(textBox1);
+            Controls.Add(infoLabel);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "HomeForm";
             Text = "HomeForm";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Button SubmitButton;
+        private Label infoLabel;
+        private TextBox textBox1;
     }
 }

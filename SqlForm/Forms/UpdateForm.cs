@@ -92,19 +92,11 @@ namespace SqlForm
             FillFieldDropDown();
             FillConditionalDropdown();
 
-            FieldDropdown.Visible = true;
-            submitFieldSelection.Visible = true;
+            queryBuilderPanel.Visible = true;
 
-            updateValueBox.Visible = true;
-
-            LeftConditionDropdown.Visible = true;
-            MiddleConditionDropdown.Visible = true;
-            RightConditionDropdown.Visible = true;
-            submitConditionSelection.Visible = true;
+            queryBox.Visible = true;
 
             SubmitAllButton.Visible = true;
-            manualQueryButton.Visible = true;
-            viewQueryButton.Visible = true;
         }
 
         private void SubmitFieldSelection_Click(object sender, EventArgs e)
@@ -152,30 +144,6 @@ namespace SqlForm
 
                 query = TestSql.BuildUpdateQuery(SqlTableDropdown.SelectedItem.ToString(), updateFields, updateValueFields, updateConditions);
             }
-        }
-
-        private void ViewQueryButton_Click(object sender, EventArgs e)
-        {
-            QueryForm queryForm = new QueryForm();
-
-            queryForm.parentForm = this;
-            queryForm.canEdit = false;
-            queryForm.queryString = query;
-
-            queryForm.ChangeData();
-            queryForm.Show();
-        }
-
-        private void ManualQueryButton_Click(object sender, EventArgs e)
-        {
-            QueryForm queryForm = new QueryForm();
-
-            queryForm.parentForm = this;
-            queryForm.canEdit = true;
-            queryForm.queryString = query;
-
-            queryForm.ChangeData();
-            queryForm.Show();
         }
 
         private void FinishQueryCreationButton_Click(object sender, EventArgs e)
