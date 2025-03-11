@@ -59,6 +59,10 @@ namespace SqlForm
                     PanelTop.BackColor = Color.FromArgb(3, 74, 124);
                     HeaderLabel.Text = "Home";
                     break;
+                case ("SettingsForm"):
+                    PanelTop.BackColor = Color.Gray;
+                    HeaderLabel.Text = "Settings";
+                    break;
 
                 default:
                     MessageBox.Show("Critical Error in UpdateLabelColor", $"Missing instance for {FormName}");
@@ -94,6 +98,9 @@ namespace SqlForm
 
                     case ("Update"):
                         currentButton.BackColor = Color.FromArgb(255, 87, 34);
+                        break;
+                    case ("Settings"):
+                        currentButton.BackColor = Color.Gray;
                         break;
                     case ("Home"):
                         break;
@@ -142,6 +149,12 @@ namespace SqlForm
         {
             UpdateButtonColor((Button)sender);
             OpenChildForm(new HomeForm());
+        }
+
+        private void SettingsSidebarButton_Click(object sender, EventArgs e)
+        {
+            UpdateButtonColor((Button)sender);
+            OpenChildForm(new SettingsForm());
         }
     }
 }

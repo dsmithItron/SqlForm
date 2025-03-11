@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlForm));
             SidebarPanel = new Panel();
+            SettingsSidebarButton = new Button();
             SelectSidebarButton = new Button();
             InsertSidebarButton = new Button();
             UpdateSidebarButton = new Button();
@@ -46,6 +47,7 @@
             // SidebarPanel
             // 
             SidebarPanel.BackColor = Color.FromArgb(3, 64, 107);
+            SidebarPanel.Controls.Add(SettingsSidebarButton);
             SidebarPanel.Controls.Add(SelectSidebarButton);
             SidebarPanel.Controls.Add(InsertSidebarButton);
             SidebarPanel.Controls.Add(UpdateSidebarButton);
@@ -55,6 +57,24 @@
             SidebarPanel.Name = "SidebarPanel";
             SidebarPanel.Size = new Size(180, 512);
             SidebarPanel.TabIndex = 0;
+            // 
+            // SettingsSidebarButton
+            // 
+            SettingsSidebarButton.Dock = DockStyle.Bottom;
+            SettingsSidebarButton.FlatAppearance.BorderSize = 0;
+            SettingsSidebarButton.FlatStyle = FlatStyle.Flat;
+            SettingsSidebarButton.Font = new Font("MS Reference Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SettingsSidebarButton.ForeColor = Color.White;
+            SettingsSidebarButton.Image = (Image)resources.GetObject("SettingsSidebarButton.Image");
+            SettingsSidebarButton.ImageAlign = ContentAlignment.MiddleLeft;
+            SettingsSidebarButton.Location = new Point(0, 452);
+            SettingsSidebarButton.Margin = new Padding(0);
+            SettingsSidebarButton.Name = "SettingsSidebarButton";
+            SettingsSidebarButton.Size = new Size(180, 60);
+            SettingsSidebarButton.TabIndex = 5;
+            SettingsSidebarButton.Text = "Settings";
+            SettingsSidebarButton.UseVisualStyleBackColor = true;
+            SettingsSidebarButton.Click += SettingsSidebarButton_Click;
             // 
             // SelectSidebarButton
             // 
@@ -194,5 +214,6 @@
         private Button SelectSidebarButton;
         private Label HeaderLabel;
         private Button HomeButton;
+        private Button SettingsSidebarButton;
     }
 }
