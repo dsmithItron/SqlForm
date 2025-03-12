@@ -109,6 +109,7 @@ namespace SqlForm.Forms
             queryBuilderPanel.Visible = true;
 
             queryBox.Visible = true;
+            manualSubmitQueryButton.Visible = true;
 
             submitAllButton.Visible = true;
 
@@ -233,8 +234,7 @@ namespace SqlForm.Forms
             }
             if (conditionFieldsGrid.Rows.Count <= 1)
             {
-                conditionFieldsGrid.Visible = false;
-                conditionFieldsGrid = new();
+                conditionFieldsGrid.Rows.Clear();
                 conditionFieldsGrid.Visible = false;
                 query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
                 queryBox.Text = query;
@@ -250,19 +250,23 @@ namespace SqlForm.Forms
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Information
                                );
 
-            if(msgBoxResult == DialogResult.Yes)
+            if (msgBoxResult == DialogResult.Yes)
             {
                 selectFields.RemoveAt(selectFields.IndexOf(testCell.Value.ToString()));
                 selectedFieldsGrid.Rows.RemoveAt(e.RowIndex);
                 query = TestSql.BuildSelectQuery(SqlTableDropdown.SelectedItem.ToString(), selectFields, selectConditions);
                 queryBox.Text = query;
             }
-            if (selectedFieldsGrid.Rows.Count <= 1) 
+            if (selectedFieldsGrid.Rows.Count <= 1)
             {
-                selectedFieldsGrid.Visible = false;
-                selectedFieldsGrid = new();
+                selectedFieldsGrid.Rows.Clear();
                 selectedFieldsGrid.Visible = false;
             }
+        }
+
+        private void ManualSubmitQuery_Click(object sender, EventArgs e)
+        {
+            query = queryBox.Text;
         }
     }
 }

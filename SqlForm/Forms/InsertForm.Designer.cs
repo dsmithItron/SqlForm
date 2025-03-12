@@ -46,7 +46,7 @@
             // 
             SqlTableDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
             SqlTableDropdown.FormattingEnabled = true;
-            SqlTableDropdown.Location = new Point(79, 12);
+            SqlTableDropdown.Location = new Point(72, 12);
             SqlTableDropdown.Name = "SqlTableDropdown";
             SqlTableDropdown.Size = new Size(200, 23);
             SqlTableDropdown.TabIndex = 28;

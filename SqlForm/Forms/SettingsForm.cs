@@ -16,5 +16,13 @@ namespace SqlForm.Forms
         {
             InitializeComponent();
         }
+
+        private void profileBox_TextChanged(object sender, EventArgs e)
+        {
+            if (profileBox.Text.Length > 0)
+            {
+                profileOptionsPanel.Visible = true;
+            }
+        }
     }
 }

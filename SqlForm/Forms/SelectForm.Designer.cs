@@ -49,6 +49,7 @@
             submitFieldSelection = new Button();
             selectedFieldsGrid = new DataGridView();
             field = new DataGridViewTextBoxColumn();
+            manualSubmitQueryButton = new Button();
             ((System.ComponentModel.ISupportInitialize)conditionFieldsGrid).BeginInit();
             queryBuilderPanel.SuspendLayout();
             conditionFieldQueryBuilderPanel.SuspendLayout();
@@ -107,6 +108,7 @@
             conditionFieldsGrid.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1 });
             conditionFieldsGrid.Location = new Point(419, 12);
             conditionFieldsGrid.Name = "conditionFieldsGrid";
+            conditionFieldsGrid.ReadOnly = true;
             conditionFieldsGrid.RowHeadersVisible = false;
             conditionFieldsGrid.Size = new Size(215, 362);
             conditionFieldsGrid.TabIndex = 22;
@@ -118,6 +120,7 @@
             dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewTextBoxColumn1.HeaderText = "Condition Fields";
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
             dataGridViewTextBoxColumn1.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // queryBuilderPanel
@@ -267,6 +270,7 @@
             selectedFieldsGrid.Columns.AddRange(new DataGridViewColumn[] { field });
             selectedFieldsGrid.Location = new Point(640, 12);
             selectedFieldsGrid.Name = "selectedFieldsGrid";
+            selectedFieldsGrid.ReadOnly = true;
             selectedFieldsGrid.RowHeadersVisible = false;
             selectedFieldsGrid.Size = new Size(157, 362);
             selectedFieldsGrid.TabIndex = 30;
@@ -278,13 +282,28 @@
             field.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             field.HeaderText = "Selected Fields";
             field.Name = "field";
+            field.ReadOnly = true;
             field.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // manualSubmitQueryButton
+            // 
+            manualSubmitQueryButton.FlatAppearance.BorderSize = 0;
+            manualSubmitQueryButton.Location = new Point(150, 347);
+            manualSubmitQueryButton.Margin = new Padding(0);
+            manualSubmitQueryButton.Name = "manualSubmitQueryButton";
+            manualSubmitQueryButton.Size = new Size(133, 27);
+            manualSubmitQueryButton.TabIndex = 14;
+            manualSubmitQueryButton.Text = "Manual Query Submit";
+            manualSubmitQueryButton.UseVisualStyleBackColor = true;
+            manualSubmitQueryButton.Visible = false;
+            manualSubmitQueryButton.Click += ManualSubmitQuery_Click;
             // 
             // SelectForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 421);
+            Controls.Add(manualSubmitQueryButton);
             Controls.Add(selectedFieldsGrid);
             Controls.Add(SqlTableDropdown);
             Controls.Add(tableLabel);
@@ -326,5 +345,6 @@
         private Button submitFieldSelection;
         private DataGridView selectedFieldsGrid;
         private DataGridViewTextBoxColumn field;
+        private Button manualSubmitQueryButton;
     }
 }
