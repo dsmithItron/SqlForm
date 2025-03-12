@@ -49,9 +49,11 @@
             submitFieldSelection = new Button();
             selectedFieldsGrid = new DataGridView();
             field = new DataGridViewTextBoxColumn();
+            selectedValues = new DataGridViewTextBoxColumn();
             conditionFieldsGrid = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             queryBox = new TextBox();
+            manualQuerySubmitButton = new Button();
             ((System.ComponentModel.ISupportInitialize)selectTable).BeginInit();
             queryBuilderPanel.SuspendLayout();
             panel2.SuspendLayout();
@@ -179,6 +181,7 @@
             submitConditionConjunction.TabIndex = 13;
             submitConditionConjunction.Text = "Submit";
             submitConditionConjunction.UseVisualStyleBackColor = true;
+            submitConditionConjunction.Click += SubmitConditionConjunction_Click;
             // 
             // MiddleConditionDropdown
             // 
@@ -198,6 +201,7 @@
             submitConditionSelection.TabIndex = 5;
             submitConditionSelection.Text = "Submit";
             submitConditionSelection.UseVisualStyleBackColor = true;
+            submitConditionSelection.Click += SubmitConditionSelection_Click;
             // 
             // conditionConjunctDropdown
             // 
@@ -259,24 +263,38 @@
             submitFieldSelection.TabIndex = 4;
             submitFieldSelection.Text = "Submit";
             submitFieldSelection.UseVisualStyleBackColor = true;
+            submitFieldSelection.Click += SubmitFieldSelection_Click;
             // 
             // selectedFieldsGrid
             // 
             selectedFieldsGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            selectedFieldsGrid.Columns.AddRange(new DataGridViewColumn[] { field });
-            selectedFieldsGrid.Location = new Point(640, 12);
+            selectedFieldsGrid.Columns.AddRange(new DataGridViewColumn[] { field, selectedValues });
+            selectedFieldsGrid.Location = new Point(620, 12);
             selectedFieldsGrid.Name = "selectedFieldsGrid";
+            selectedFieldsGrid.ReadOnly = true;
             selectedFieldsGrid.RowHeadersVisible = false;
-            selectedFieldsGrid.Size = new Size(157, 362);
+            selectedFieldsGrid.Size = new Size(177, 362);
             selectedFieldsGrid.TabIndex = 29;
             selectedFieldsGrid.Visible = false;
+            selectedFieldsGrid.CellClick += SelectedFieldsGrid_CellClick;
             // 
             // field
             // 
             field.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            field.HeaderText = "Selected Fields";
+            field.FillWeight = 97.0051F;
+            field.HeaderText = "Fields";
             field.Name = "field";
+            field.ReadOnly = true;
             field.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // selectedValues
+            // 
+            selectedValues.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            selectedValues.FillWeight = 32.9949226F;
+            selectedValues.HeaderText = "Values";
+            selectedValues.MinimumWidth = 50;
+            selectedValues.Name = "selectedValues";
+            selectedValues.ReadOnly = true;
             // 
             // conditionFieldsGrid
             // 
@@ -284,16 +302,19 @@
             conditionFieldsGrid.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1 });
             conditionFieldsGrid.Location = new Point(419, 12);
             conditionFieldsGrid.Name = "conditionFieldsGrid";
+            conditionFieldsGrid.ReadOnly = true;
             conditionFieldsGrid.RowHeadersVisible = false;
-            conditionFieldsGrid.Size = new Size(215, 362);
+            conditionFieldsGrid.Size = new Size(195, 362);
             conditionFieldsGrid.TabIndex = 30;
             conditionFieldsGrid.Visible = false;
+            conditionFieldsGrid.CellClick += ConditionFieldsGrid_CellClick;
             // 
             // dataGridViewTextBoxColumn1
             // 
             dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewTextBoxColumn1.HeaderText = "Condition Fields";
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
             dataGridViewTextBoxColumn1.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // queryBox
@@ -307,11 +328,24 @@
             queryBox.Visible = false;
             queryBox.WordWrap = false;
             // 
+            // manualQuerySubmitButton
+            // 
+            manualQuerySubmitButton.FlatAppearance.BorderSize = 0;
+            manualQuerySubmitButton.Location = new Point(136, 350);
+            manualQuerySubmitButton.Margin = new Padding(0);
+            manualQuerySubmitButton.Name = "manualQuerySubmitButton";
+            manualQuerySubmitButton.Size = new Size(145, 23);
+            manualQuerySubmitButton.TabIndex = 14;
+            manualQuerySubmitButton.Text = "Manual Query Submit";
+            manualQuerySubmitButton.UseVisualStyleBackColor = true;
+            manualQuerySubmitButton.Visible = false;
+            // 
             // UpdateForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 421);
+            Controls.Add(manualQuerySubmitButton);
             Controls.Add(queryBox);
             Controls.Add(conditionFieldsGrid);
             Controls.Add(selectedFieldsGrid);
@@ -357,9 +391,11 @@
         private ComboBox FieldDropdown;
         private Button submitFieldSelection;
         private DataGridView selectedFieldsGrid;
-        private DataGridViewTextBoxColumn field;
         private DataGridView conditionFieldsGrid;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private TextBox queryBox;
+        private DataGridViewTextBoxColumn field;
+        private DataGridViewTextBoxColumn selectedValues;
+        private Button manualQuerySubmitButton;
     }
 }

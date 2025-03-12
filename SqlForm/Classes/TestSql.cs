@@ -11,7 +11,7 @@ namespace SqlForm.Classes
         public static string tableName = "";
         // This needs to be kept current with each table that needs to be accessed
         public static List<string> tableNames = new() { ("Specform_all_options"), ("Xml_sql_mapping") };
-        private static string connectionString = "Data Source=../../../Resources/testDB.db";
+        private static readonly string connectionString = "Data Source=../../../Resources/testDB.db";
 
         /// <summary>
         /// 
