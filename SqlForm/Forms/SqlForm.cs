@@ -16,10 +16,11 @@ namespace SqlForm
         public void OpenChildForm(ChildSqlForm childForm)
         {
             Thread.Sleep(100);
-            if (activeForm != null)
-                activeForm.Close();
-
-            activeForm = childForm;
+            if (childForm.Text != "ResultForm")
+            {
+                activeForm?.Close();
+                activeForm = childForm;
+            }
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
@@ -63,7 +64,8 @@ namespace SqlForm
                     PanelTop.BackColor = Color.Gray;
                     HeaderLabel.Text = "Settings";
                     break;
-
+                case ("ResultForm"):
+                    break;
                 default:
                     MessageBox.Show("Critical Error in UpdateLabelColor", $"Missing instance for {FormName}");
                     break;
