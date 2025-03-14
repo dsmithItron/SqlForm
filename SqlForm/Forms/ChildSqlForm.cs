@@ -14,6 +14,9 @@ namespace SqlForm.Forms
     {
         public SqlForm parentSqlForm;
         public string query = "";
+        public List<string> tableColumns = new();
+        public List<string> conditions = new();
+        public List<string> fields = new();
 
         public ChildSqlForm()
         {
