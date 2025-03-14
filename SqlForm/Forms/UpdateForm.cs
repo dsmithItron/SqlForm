@@ -218,19 +218,19 @@ namespace SqlForm
 
         private void SelectedFieldsGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var fieldName = selectedFieldsGrid.Rows[e.RowIndex].Cells[0];
-            var fieldValue = selectedFieldsGrid.Rows[e.RowIndex].Cells[1];
+            var fieldName = selectedFieldsGrid.Rows[e.RowIndex].Cells[0].Value;
+            var fieldValue = selectedFieldsGrid.Rows[e.RowIndex].Cells[1].Value;
             var msgBoxResult = MessageBox.Show
                                (
-                                $"Do you want to remove the select field \"{fieldName} : {fieldValue}\"",
+                                $"Do you want to remove the field \"{fieldName} and its value {fieldValue}\"?",
                                 $"Remove Selected Field",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Information
                                );
 
             if (msgBoxResult == DialogResult.Yes)
             {
-                updateFields.RemoveAt(updateFields.IndexOf(fieldName.Value.ToString()));
-                updateValueFields.RemoveAt(updateValueFields.IndexOf(fieldValue.Value.ToString()));
+                updateFields.RemoveAt(updateFields.IndexOf(fieldName.ToString()));
+                updateValueFields.RemoveAt(updateValueFields.IndexOf(fieldValue.ToString()));
                 selectedFieldsGrid.Rows.RemoveAt(e.RowIndex);
                 query = TestSql.BuildUpdateQuery(SqlTableDropdown.SelectedItem.ToString(), updateFields, updateValueFields, updateConditions);
                 queryBox.Text = query;
