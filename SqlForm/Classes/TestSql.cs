@@ -2,6 +2,7 @@
 using System.Text;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
+using Microsoft.VisualBasic;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SqlForm.Classes
@@ -235,49 +236,38 @@ namespace SqlForm.Classes
             // default table returned, cleared if msgBoxResult != No
             selectTable.Columns.Add("Message", typeof(string));
             selectTable.Rows.Add($"{query} cancelled");
-
-            var msgBoxResult = MessageBox.Show
-                               (
-                                $"{query}",
-                                $"Select Command",
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Information
-                               );
-
-            if (msgBoxResult != DialogResult.No)
+            ApplicationHistory.AddQueryToHistory(query);
+            selectTable = new();
+            using (SqliteConnection connection = new(connectionString))
             {
-                ApplicationHistory.AddQueryToHistory(query);
-                selectTable = new();
-                using (SqliteConnection connection = new(connectionString))
+                try
                 {
-                    try
+                    connection.Open();
+                    SqliteCommand command = connection.CreateCommand();
+                    SqliteDataReader reader;
+
+                    command.CommandText = query;
+                    reader = command.ExecuteReader();
+
+                    selectTable.Load(reader);
+                    foreach (DataRow row in selectTable.Rows)
                     {
-                        connection.Open();
-                        SqliteCommand command = connection.CreateCommand();
-                        SqliteDataReader reader;
-
-                        command.CommandText = query;
-                        reader = command.ExecuteReader();
-
-                        selectTable.Load(reader);
-                        foreach (DataRow row in selectTable.Rows)
+                        for (int i = 0; i < selectTable.Columns.Count; i++)
                         {
-                            for (int i = 0; i < selectTable.Columns.Count; i++)
+                            if (row.IsNull(i)) // Check if the value is NULL in the current DataRow
                             {
-                                if (row.IsNull(i)) // Check if the value is NULL in the current DataRow
-                                {
-                                    // Replace NULL value with "Null" string
-                                    row[i] = "NULL";
-                                }
+                                // Replace NULL value with "Null" string
+                                row[i] = "NULL";
                             }
                         }
-                        return selectTable;
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
-                                        $"Error in testsql Select",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    return selectTable;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error Type : {ex.GetType()}\nError : {ex.Message}",
+                                    $"Error in testsql Select",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             return selectTable;
@@ -301,9 +291,6 @@ namespace SqlForm.Classes
                         SqliteCommand command = connection.CreateCommand();
 
                         command.CommandText = query;
-                        MessageBox.Show($"{command.CommandText}",
-                                        $"Query Command",
-                                        MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         command.ExecuteNonQuery();
                     }
                     catch (Exception ex)
